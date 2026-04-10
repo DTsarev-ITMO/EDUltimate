@@ -1,13 +1,16 @@
 from fastapi import FastAPI
 from app.food.models import Food
-from app.users.router import router as router_users
+from app.users.router import router as router_user
+from app.food.router import router as router_food
 
 app = FastAPI()
 @app.get("/")
 def read_root():
     return {"Вас приветствует Eating Disorder Ultimate -- приложение для вашего растройства пищевого поведения."}
 
-app.include_router(router_users)
+
+app.include_router(router_user)
+app.include_router(router_food)
 
 # Food
 #
