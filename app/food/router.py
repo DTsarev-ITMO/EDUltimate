@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from app.food.dao import FoodDAO
-from app.food.schemas import ResponseFoodGet, ResponseFoodAdd, ResponseFoodUpdate,ResponseFoodUpdName,ResponseFoodUpdProtein, ResponseFoodUpdFats, ResponseFoodUpdCarbs
+from app.food.schemas import ResponseFoodGet, ResponseFoodAdd, ResponseFoodUpdate #,ResponseFoodUpdName,ResponseFoodUpdProtein, ResponseFoodUpdFats, ResponseFoodUpdCarbs
 from app.food.rb import RBFood
 
 router = APIRouter(prefix='/food', tags=['Работа с продуктами'])
@@ -24,23 +24,23 @@ async def add_food(food: ResponseFoodAdd) -> dict:
     else:
         return {"message": "Ошибка при добавлении продукта!"}
 
-# @router.put("/update/")
-# async def update_name(food: ResponseFoodUpdate) -> dict:
-#     check = await FoodDAO.update(filter_by={'food_name': food.name},
-#                                    name=food.new_name)
-#     if check:
-#         return {"message": "Запись успешно обновлена!", "food": food}
-#     else:
-#         return {"message": "Ошибка при обновлении записи!"}
-
-@router.put("/update_protein/")
-async def update_protein(food: ResponseFoodUpdProtein) -> dict:
-    check = await FoodDAO.update(filter_by={'name': food.name},
-                                   protein=food.protein)
+@router.put("/update/")
+async def update(food: ResponseFoodUpdate) -> dict:
+    check = await FoodDAO.update(filter_by={'name': food.filter_name},
+                                 **food.model_dump(exclude={'filter_name'}, exclude_none=True))
     if check:
-        return {"message": "Содержание белка успешно обновлено!", "food": food}
+        return {"message": "Запись успешно обновлена!", "food": food}
     else:
-        return {"message": "Ошибка при обновлении содержания белка!"}
+        return {"message": "Ошибка при обновлении записи!"}
+
+# @router.put("/update_protein/")
+# async def update_protein(food: ResponseFoodUpdProtein) -> dict:
+#     check = await FoodDAO.update(filter_by={'name': food.name},
+#                                    protein=food.protein)
+#     if check:
+#         return {"message": "Содержание белка успешно обновлено!", "food": food}
+#     else:
+#         return {"message": "Ошибка при обновлении содержания белка!"}
 
 @router.delete("/delete/{food_name}")
 async def delete_food(food_name: str) -> dict:

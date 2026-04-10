@@ -1,5 +1,6 @@
 import asyncio
 import httpx
+from typing import Optional
 
 headers = {
     'accept': 'application/json',
@@ -29,16 +30,35 @@ async def get_food_by_name(name: str):
         response = await client.get(url, headers=headers, params=data)
         return response.json()
 
-async def update_food_protein(name: str, protein: float):
-    url = 'http://127.0.0.1:8000/food/update_protein/'
+async def update_food(filter_name: str,
+                      name: Optional[str] = None,
+                      protein: Optional[float] = None,
+                      fats: Optional[float] = None,
+                      carbs: Optional[float] = None):
+    url = 'http://127.0.0.1:8000/food/update/'
     data = {
+        "filter_name": filter_name,
         "name": name,
-        "protein": protein
+        "protein": protein,
+        "fats": fats,
+        "carbs": carbs
     }
+    data = {k: v for k, v in data.items() if v is not None}
 
     async with httpx.AsyncClient() as client:
         response = await client.put(url, headers=headers, json=data)
         return response.json()
+
+# async def update_food_protein(name: str, protein: float):
+#     url = 'http://127.0.0.1:8000/food/update_protein/'
+#     data = {
+#         "name": name,
+#         "protein": protein
+#     }
+#
+#     async with httpx.AsyncClient() as client:
+#         response = await client.put(url, headers=headers, json=data)
+#         return response.json()
 
 async def delete_food(food_name: str):
     url = 'http://127.0.0.1:8000/food/delete/' + food_name
@@ -51,16 +71,20 @@ async def delete_food(food_name: str):
 # вызов функции
 if __name__ == '__main__':
     # response = asyncio.run(add_food(food_name='УдалиМеня', protein=10.0, fats=11.0, carbs=12.0))
-    response = asyncio.run(get_food_by_name(name='УдалиМеня'))
-    # response = asyncio.run(update_food_protein(name='УдалиМеня', protein=0))
+    # response = asyncio.run(get_food_by_name(name='УдалиМеня'))
+    response = asyncio.run(update_food(filter_name='УдалиМеня', fats=0))
+    # response = asyncio.run(update_food(filter_name='УдалиМеня', protein=0))
     # response = asyncio.run(delete_food(food_name='УдалиМеня'))
     # response = asyncio.run(add_food(food_name='Куриная грудка', protein=23.6, fats=1.9, carbs=0.4))
     # response = asyncio.run(delete_food(food_name='Куриная грудка'))
     print(response)
 
-    # try:
-    #     food=ResponseFoodUpdProtein(name='УдалиМеня', protein=0)
-    #     print(food.name)  # Доступ к данным
-    #     print(food.model_dump())  # Преобразование в словарь [10]
-    # except ValidationError as e:
-    #     print(e)
+    # data = {
+    #     "filter_name": None,
+    #     "name": None,
+    #     "protein": 1,
+    #     "fats": None,
+    #     "carbs": None
+    # }
+    # data = {k: v for k, v in data.items() if v is not None}
+    # print(data)
