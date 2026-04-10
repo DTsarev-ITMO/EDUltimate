@@ -29,7 +29,7 @@ async def update(food: ResponseFoodUpdate) -> dict:
     check = await FoodDAO.update(filter_by={'name': food.filter_name},
                                  **food.model_dump(exclude={'filter_name'}, exclude_none=True))
     if check:
-        return {"message": "Запись успешно обновлена!", "food": food}
+        return {"message": "Запись успешно обновлена!", "продукт": food}
     else:
         return {"message": "Ошибка при обновлении записи!"}
 
