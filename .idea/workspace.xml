@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/FrontendSimulation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/FrontendSimulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/FrontendSimulation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/dao/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/dao/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/food/dao.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/food/dao.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/food/rb.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/food/rb.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/food/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/food/router.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/food/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/food/schemas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/users/rb.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/users/rb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/users/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/users/router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/req.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -59,7 +58,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "dev",
     "last_opened_file_path": "/home/dvtsarev/PycharmProjects/EDUltimate/app/users",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "terminal"
