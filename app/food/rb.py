@@ -1,0 +1,18 @@
+class RBFood:
+    def __init__(self, food_id: int | None = None,
+                 name: str | None = None,
+                 protein: float | None = None,
+                 fats: float | None = None,
+                 carbs: float | None = None):
+        self.id = food_id
+        self.name = name
+        self.protein = protein
+        self.fats = fats
+        self.carbs = carbs
+
+    def to_dict(self) -> dict:
+        data = {'id': self.id, 'Имя': self.name, 'Белка на 100 грамм': self.protein,
+                'Жиров на 100 грамм': self.fats, 'Углеводов на 100 грамм': self.carbs}
+        # Создаем копию словаря, чтобы избежать изменения словаря во время итерации
+        filtered_data = {key: value for key, value in data.items() if value is not None}
+        return filtered_data
