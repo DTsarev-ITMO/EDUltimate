@@ -49,17 +49,6 @@ async def update_food(filter_name: str,
         response = await client.put(url, headers=headers, json=data)
         return response.json()
 
-# async def update_food_protein(name: str, protein: float):
-#     url = 'http://127.0.0.1:8000/food/update_protein/'
-#     data = {
-#         "name": name,
-#         "protein": protein
-#     }
-#
-#     async with httpx.AsyncClient() as client:
-#         response = await client.put(url, headers=headers, json=data)
-#         return response.json()
-
 async def delete_food(food_name: str):
     url = 'http://127.0.0.1:8000/food/delete/' + food_name
 
@@ -78,13 +67,3 @@ if __name__ == '__main__':
     # response = asyncio.run(add_food(food_name='Куриная грудка', protein=23.6, fats=1.9, carbs=0.4))
     # response = asyncio.run(delete_food(food_name='Куриная грудка'))
     print(response)
-
-    # data = {
-    #     "filter_name": None,
-    #     "name": None,
-    #     "protein": 1,
-    #     "fats": None,
-    #     "carbs": None
-    # }
-    # data = {k: v for k, v in data.items() if v is not None}
-    # print(data)

@@ -33,15 +33,6 @@ async def update(food: ResponseFoodUpdate) -> dict:
     else:
         return {"message": "Ошибка при обновлении записи!"}
 
-# @router.put("/update_protein/")
-# async def update_protein(food: ResponseFoodUpdProtein) -> dict:
-#     check = await FoodDAO.update(filter_by={'name': food.name},
-#                                    protein=food.protein)
-#     if check:
-#         return {"message": "Содержание белка успешно обновлено!", "food": food}
-#     else:
-#         return {"message": "Ошибка при обновлении содержания белка!"}
-
 @router.delete("/delete/{food_name}")
 async def delete_food(food_name: str) -> dict:
     check = await FoodDAO.delete(name=food_name)
