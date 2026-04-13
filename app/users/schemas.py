@@ -28,3 +28,8 @@ class ResponseUserUpdate(BaseModel):
     weight: float = Field(None, ge=0, description="Масса должна быть неотрицательной")
     LBS: float = Field(None, ge=0, description="Сухая масса должна быть неотрицательной")
     fat_percentage: float = Field(None, ge=0, le=100, description="Процент жира должен быть от 0 до 100")
+
+class ResponseUserUpdatePassword(BaseModel):
+    email: EmailStr = Field(None, description="Электронная почта")
+    password: str = Field(..., min_length=1, max_length=50, description="Пароль, от 1 до 50 символов")
+    new_password: str = Field(..., min_length=1, max_length=50, description="Пароль, от 1 до 50 символов")

@@ -1,12 +1,12 @@
 from fastapi import Response
 from app.users.dao import UserDAO
-from app.users.schemas import ResponseUserRegister, ResponseUserAuth, ResponseUserMakeAdmin, ResponseUserUpdate
+from app.users.schemas import ResponseUserRegister, ResponseUserAuth, ResponseUserMakeAdmin, ResponseUserUpdate, ResponseUserUpdatePassword
 from fastapi import APIRouter, HTTPException, status, Depends
 from app.users.auth import get_password_hash, authenticate_user, create_access_token
 from app.users.dependencies import get_current_user, get_current_admin_user, get_current_super_admin_user
 from app.users.models import User
 
-router = APIRouter(prefix='/auth', tags=['Работа с пользователями'])
+router = APIRouter(prefix='/user', tags=['Работа с пользователями'])
 
 @router.post("/register/")
 async def register_user(user_data: ResponseUserRegister) -> dict:
@@ -54,7 +54,7 @@ async def make_admin(user_to_update_id: ResponseUserMakeAdmin, myself: User = De
         return {"message": "Ошибка при добавлении администратора!"}
 
 @router.put("/update/")
-async def update(user_data = ResponseUserUpdate, current_user: User = Depends(get_current_user)) -> dict:
+async def update(user_data: ResponseUserUpdate, current_user: User = Depends(get_current_user)) -> dict:
     check = await UserDAO.update(filter_by={'id': current_user.id},
                                  **user_data.model_dump(exclude_none=True))
     if check:
@@ -62,7 +62,19 @@ async def update(user_data = ResponseUserUpdate, current_user: User = Depends(ge
     else:
         return {"message": "Ошибка при обновлении записи!"}
 
-
+@router.put("/update_password/")
+async def update(user_data: ResponseUserUpdatePassword, current_user: User = Depends(get_current_user)) -> dict:
+    check = await authenticate_user(email=user_data.email, password=user_data.password)
+    if check is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail='Неверная почта или пароль')
+    new_password = get_password_hash(user_data.new_password)
+    check = await UserDAO.update(filter_by={'id': current_user.id},
+                                 password=new_password)
+    if check:
+        return {"message": "Пароль успешно изменен!"}
+    else:
+        return {"message": "Ошибка при изменении пароля!"}
 
 @router.delete("/delete_me/")
 async def delete_me(myself: User = Depends(get_current_user)):

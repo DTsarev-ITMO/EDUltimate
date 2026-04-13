@@ -6,6 +6,10 @@ headers = {
     'Content-Type': 'application/json'
 }
 
+admin_data = {
+    'email': 'admin@mail.ru',
+    'password': 'password'
+}
 
 async def add_food(food_name: str, protein: float, fats: float, carbs: float):
     url = 'http://127.0.0.1:8000/food/add/'
@@ -17,6 +21,7 @@ async def add_food(food_name: str, protein: float, fats: float, carbs: float):
     }
 
     async with httpx.AsyncClient() as client:
+        await client.post('http://127.0.0.1:8000/user/login/', headers=headers, json=admin_data)
         response = await client.post(url, headers=headers, json=data)
         return response.json()
 
@@ -48,6 +53,7 @@ async def update_food(filter_name: str,
     data = {k: v for k, v in data.items() if v is not None}
 
     async with httpx.AsyncClient() as client:
+        await client.post('http://127.0.0.1:8000/user/login/', headers=headers, json=admin_data)
         response = await client.put(url, headers=headers, json=data)
         return response.json()
 
@@ -56,5 +62,6 @@ async def delete_food(food_name: str):
     url = 'http://127.0.0.1:8000/food/delete/' + food_name
 
     async with httpx.AsyncClient() as client:
+        await client.post('http://127.0.0.1:8000/user/login/', headers=headers, json=admin_data)
         response = await client.delete(url)
         return response.json()
