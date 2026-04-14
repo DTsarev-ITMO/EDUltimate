@@ -40,7 +40,7 @@ async def logout_user(response: Response):
     response.delete_cookie(key="user_access_token")
     return {'message': 'Пользователь вышел из системы'}
 
-@router.get("/all_users/")
+@router.get("/")
 async def get_all_users(user_data: User = Depends(get_current_admin_user)):
     return await UserDAO.find_all()
 

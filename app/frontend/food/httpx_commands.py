@@ -11,10 +11,10 @@ admin_data = {
     'password': 'password'
 }
 
-async def add_food(food_name: str, protein: float, fats: float, carbs: float):
+async def add_food(name: str, protein: float, fats: float, carbs: float):
     url = 'http://127.0.0.1:8000/food/add/'
     data = {
-        "name": food_name,
+        "name": name,
         "protein": protein,
         "fats": fats,
         "carbs": carbs
@@ -58,8 +58,8 @@ async def update_food(filter_name: str,
         return response.json()
 
 
-async def delete_food(food_name: str):
-    url = 'http://127.0.0.1:8000/food/delete/' + food_name
+async def delete_food(name: str):
+    url = 'http://127.0.0.1:8000/food/delete/' + name
 
     async with httpx.AsyncClient() as client:
         await client.post('http://127.0.0.1:8000/user/login/', headers=headers, json=admin_data)

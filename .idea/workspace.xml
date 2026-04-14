@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="Написан RESTfull API для работы с базой данных пользователей: аутентификация и роли">
-      <change afterPath="$PROJECT_DIR$/app/frontend/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/frontend/food/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/frontend/users/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/frontend/users/httpx_commands.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/Test0UserAPI.py" afterDir="false" />
+    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="RESTfull API для работы с базой данных пользователей покрыт тестами">
+      <change afterPath="$PROJECT_DIR$/app/dish/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dish/dao.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dish/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dish/router.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dish/schemas.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/pages/router.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/static/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/food.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/users/diet/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/FrontendSimulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/frontend/FrontendSimulation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Httpx.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/frontend/food/httpx_commands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/frontend/food/httpx_commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/frontend/food/httpx_commands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/users/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/users/router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/users/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/users/schemas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/TestFoodAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Test1FoodAPI.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +30,7 @@
       <list>
         <option value="Python Unit Test" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -42,12 +48,12 @@
     &quot;assignee&quot;: &quot;DTsarev-ITMO&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/DTsarev-ITMO/EDUltimate.git",
-    "accountId": "48c4b965-a648-4935-9044-5d83a9b173c7"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DTsarev-ITMO/EDUltimate.git&quot;,
+    &quot;accountId&quot;: &quot;48c4b965-a648-4935-9044-5d83a9b173c7&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6,
   &quot;fromUser&quot;: false
@@ -57,26 +63,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python tests.Python tests in Test0UserAPI.py.executor": "Run",
-    "Python tests.Python tests in Test1FoodAPI.py.executor": "Run",
-    "Python tests.Python tests in TestFoodAPI.py.executor": "Run",
-    "Python.FrontendSimulation.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "dev",
-    "last_opened_file_path": "/home/dvtsarev/PycharmProjects/EDUltimate/tests",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "terminal"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Python tests in Test0UserAPI.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in Test1FoodAPI.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in TestFoodAPI.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.FrontendSimulation.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/dvtsarev/PycharmProjects/EDUltimate/app/dish&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/dish" />
+      <recent name="$PROJECT_DIR$/app/recipe" />
       <recent name="$PROJECT_DIR$/tests" />
       <recent name="$PROJECT_DIR$/app/frontend/users" />
       <recent name="$PROJECT_DIR$/app/users" />
@@ -199,7 +208,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776083911789</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="RESTfull API для работы с базой данных пользователей покрыт тестами">
+      <option name="closed" value="true" />
+      <created>1776092411169</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1776092411169</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,6 +227,7 @@
     <MESSAGE value="PUT для Food реализован" />
     <MESSAGE value="PUT для Food реализован, хотфикс" />
     <MESSAGE value="Написан RESTfull API для работы с базой данных пользователей: аутентификация и роли" />
-    <option name="LAST_COMMIT_MESSAGE" value="Написан RESTfull API для работы с базой данных пользователей: аутентификация и роли" />
+    <MESSAGE value="RESTfull API для работы с базой данных пользователей покрыт тестами" />
+    <option name="LAST_COMMIT_MESSAGE" value="RESTfull API для работы с базой данных пользователей покрыт тестами" />
   </component>
 </project>
