@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="Фронтенд навайбкоден, но пока не понятен">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/migration/versions/2ac352773595_add_photo_column.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/migration/versions/2e574864729e_update_users_table.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/migration/versions/509a501037d7_initial_revision.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/migration/versions/906145104639_update_users_table.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/migration/versions/9abbe471ae76_second_revision.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
