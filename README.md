@@ -16,3 +16,10 @@
 5. Реализовать алгоритмы составления диеты
 6. Реализовать инфографику прогресса пользователя
 7. Написать фронтенд для смартфонов на базе андроид и iOS
+
+Инструкции по запуску проекта:
+1. git clone https://github.com/vash-proekt
+2. cp .env.example .env (редактирует пароли, если нужно).
+3. docker compose up -d — Docker сам скачает Postgres, FastAPI и запустит их.
+4. docker compose exec app alembic upgrade head — база сама создаст все нужные таблицы.
+5. (Опционально) Запускает скрипт для наполнения базы: docker compose exec app python seed.py.
