@@ -1,0 +1,16 @@
+Docker:
+sudo docker ps - посмотреть запущенные контейнеры
+sudo docker compose up -d - собрать контейнеры из docker-compose.yml
+sudo docker stop fastapi_db fastapi_app - остановить контейнеры
+sudo docker rm -f fastapi_db fastapi_app - удалить контейнеры
+
+
+Alembic:
+alembic revision --autogenerate -m "comment" — создание скрипта на основе изменений в моделях
+alembic upgrade head — применение всех последних миграций
+alembic downgrade -1 — возврат на одну версию назад
+
+bash скрипты запуска:
+cp .env.example .env
+sudo docker compose up -d
+docker logs -f fastapi_app

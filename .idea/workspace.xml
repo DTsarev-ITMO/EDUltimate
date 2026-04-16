@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="PUT для Food реализован, хотфикс">
-      <change afterPath="$PROJECT_DIR$/tests/TestFoodAPI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/EDUltimate.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/EDUltimate.iml" afterDir="false" />
+    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/FrontendSimulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/FrontendSimulation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/food/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/food/router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/migration/versions/2ac352773595_add_photo_column.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/migration/versions/2e574864729e_update_users_table.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/migration/versions/509a501037d7_initial_revision.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/migration/versions/906145104639_update_users_table.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/migration/versions/9abbe471ae76_second_revision.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +18,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="Python Unit Test" />
+        <option value="Python Script" />
+        <option value="HTML File" />
+        <option value="Dockerfile" />
       </list>
     </option>
   </component>
@@ -38,7 +42,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/DTsarev-ITMO/EDUltimate.git&quot;,
-    &quot;accountId&quot;: &quot;56f5d8e3-2e85-4fab-972e-355f34924908&quot;
+    &quot;accountId&quot;: &quot;48c4b965-a648-4935-9044-5d83a9b173c7&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -50,32 +54,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python tests.Python tests in TestFoodAPI.py.executor": "Run",
-    "Python.FrontendSimulation.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "dev",
-    "last_opened_file_path": "/home/dvtsarev/PycharmProjects/EDUltimate/app/users",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "terminal"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Python tests in Test0UserAPI.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in Test1FoodAPI.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in TestFoodAPI.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.FrontendSimulation.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/dvtsarev/PycharmProjects/EDUltimate/app/dish&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/dish" />
+      <recent name="$PROJECT_DIR$/app/recipe" />
+      <recent name="$PROJECT_DIR$/tests" />
+      <recent name="$PROJECT_DIR$/app/frontend/users" />
       <recent name="$PROJECT_DIR$/app/users" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/frontend/food" />
+      <recent name="$PROJECT_DIR$/app/frontend" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in TestFoodAPI.py">
+  <component name="RunManager" selected="Python tests.Python tests in Test0UserAPI.py">
     <configuration name="FrontendSimulation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EDUltimate" />
       <option name="ENV_FILES" value="" />
@@ -89,9 +102,8 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="false" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/FrontendSimulation.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/frontend/FrontendSimulation.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -100,7 +112,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests in TestFoodAPI.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests in Test0UserAPI.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="EDUltimate" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -110,16 +122,32 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="false" />
       <option name="RUN_TOOL" value="" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/TestFoodAPI.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/Test0UserAPI.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in Test1FoodAPI.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="EDUltimate" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/Test1FoodAPI.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests in TestFoodAPI.py" />
+        <item itemvalue="Python tests.Python tests in Test0UserAPI.py" />
+        <item itemvalue="Python tests.Python tests in Test1FoodAPI.py" />
         <item itemvalue="Python.FrontendSimulation" />
       </list>
     </recent_temporary>
@@ -127,7 +155,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-b63d5a1f7c97-b61e75351b1f-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-261.22158.340" />
+        <option value="bundled-python-sdk-1cd77e80b48f-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.32098.74" />
       </set>
     </attachedChunks>
   </component>
@@ -163,7 +191,31 @@
       <option name="project" value="LOCAL" />
       <updated>1775833207780</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Написан RESTfull API для работы с базой данных пользователей: аутентификация и роли">
+      <option name="closed" value="true" />
+      <created>1776083911789</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1776083911789</updated>
+    </task>
+    <task id="LOCAL-00005" summary="RESTfull API для работы с базой данных пользователей покрыт тестами">
+      <option name="closed" value="true" />
+      <created>1776092411169</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1776092411169</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Фронтенд навайбкоден, но пока не понятен">
+      <option name="closed" value="true" />
+      <created>1776175688338</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1776175688338</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,16 +225,9 @@
     <MESSAGE value="Get, Post, Delete Food реализованы" />
     <MESSAGE value="PUT для Food реализован" />
     <MESSAGE value="PUT для Food реализован, хотфикс" />
-    <option name="LAST_COMMIT_MESSAGE" value="PUT для Food реализован, хотфикс" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/migration/env.py</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Написан RESTfull API для работы с базой данных пользователей: аутентификация и роли" />
+    <MESSAGE value="RESTfull API для работы с базой данных пользователей покрыт тестами" />
+    <MESSAGE value="Фронтенд навайбкоден, но пока не понятен" />
+    <option name="LAST_COMMIT_MESSAGE" value="Фронтенд навайбкоден, но пока не понятен" />
   </component>
 </project>

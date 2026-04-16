@@ -1,0 +1,35 @@
+# --- Секреты и настройки ---
+.env
+.env.local
+.venv/
+env/
+venv/
+ENV/
+
+# --- Python (Кэш и временные файлы) ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- База данных (Сами данные) ---
+# Если в docker-compose.yml ты указал папку для хранения данных, например: ./postgres_data:/var/lib/postgresql/data
+# то эту папку ОБЯЗАТЕЛЬНО нужно игнорировать.
+postgres_data/
+pgdata/
+
+# --- Docker ---
+# Обычно Docker-файлы нужны в репозитории, но логи иногда стоит скрыть
+*.log
+
+# --- Настройки IDE (Редакторы кода) ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Операционная система ---
+.DS_Store
+Thumbs.db

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дневник Питания</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden { display: none; }
+        .card { @apply bg-white p-6 rounded-lg shadow-md mb-4; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Навигация -->
+    <nav class="bg-blue-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold cursor-pointer" onclick="showSection('home')">ED Ultimate</h1>
+            <div id="nav-links">
+                <button onclick="showSection('foods')" class="px-3">Продукты</button>
+                <span id="guest-links">
+                    <button onclick="showSection('login')" class="px-3">Вход</button>
+                    <button onclick="showSection('register')" class="px-3">Регистрация</button>
+                </span>
+                <span id="user-links" class="hidden">
+                    <button onclick="showSection('profile')" class="px-3 font-semibold">Профиль</button>
+                    <button id="admin-link" onclick="showSection('admin')" class="px-3 hidden text-yellow-300">Админ</button>
+                    <button onclick="logout()" class="px-3 bg-red-500 rounded">Выход</button>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto mt-8 p-4">
+
+        <!-- Секция: Главная (Приветствие) -->
+        <section id="home-section" class="text-center">
+            <h2 class="text-4xl font-bold mb-4" id="welcome-msg">Добро пожаловать в дневник питания!</h2>
+            <p class="text-gray-600">Контролируйте КБЖУ и свой прогресс похудения эффективно.</p>
+        </section>
+
+        <!-- Секция: Вход -->
+        <section id="login-section" class="hidden max-w-md mx-auto card">
+            <h2 class="text-xl font-bold mb-4">Вход</h2>
+            <form onsubmit="login(event)">
+                <input type="email" id="login-email" placeholder="Email" class="w-full border p-2 mb-2 rounded" required>
+                <input type="password" id="login-password" placeholder="Пароль" class="w-full border p-2 mb-4 rounded" required>
+                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded">Войти</button>
+            </form>
+        </section>
+
+        <!-- Секция: Регистрация -->
+        <section id="register-section" class="hidden max-w-md mx-auto card">
+            <h2 class="text-xl font-bold mb-4">Регистрация</h2>
+            <form onsubmit="register(event)">
+                <input type="text" id="reg-name" placeholder="Имя" class="w-full border p-2 mb-2 rounded" required>
+                <input type="email" id="reg-email" placeholder="Email" class="w-full border p-2 mb-2 rounded" required>
+                <input type="password" id="reg-password" placeholder="Пароль" class="w-full border p-2 mb-2 rounded" required>
+                <div class="grid grid-cols-2 gap-2 mb-4">
+                    <input type="number" step="0.1" id="reg-weight" placeholder="Вес (кг)" class="border p-2 rounded" required>
+                    <input type="number" step="0.1" id="reg-fat" placeholder="% жира" class="border p-2 rounded">
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white p-2 rounded">Создать аккаунт</button>
+            </form>
+        </section>
+
+        <!-- Секция: Профиль пользователя -->
+        <section id="profile-section" class="hidden">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="card">
+                    <h2 class="text-xl font-bold mb-4">Мои данные</h2>
+                    <div id="user-info" class="space-y-2"></div>
+                    <button onclick="deleteMe()" class="mt-4 text-red-500 text-sm underline">Удалить аккаунт</button>
+                </div>
+                <div class="card">
+                    <h2 class="text-xl font-bold mb-4">Обновить данные</h2>
+                    <form onsubmit="updateUser(event)">
+                        <input type="text" id="upd-name" placeholder="Имя" class="w-full border p-2 mb-2 rounded">
+                        <input type="number" step="0.1" id="upd-weight" placeholder="Вес" class="w-full border p-2 mb-2 rounded">
+                        <input type="number" step="0.1" id="upd-fat" placeholder="% жира" class="w-full border p-2 mb-4 rounded">
+                        <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция: Продукты (Food) -->
+        <section id="foods-section" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">База продуктов</h2>
+                <div id="admin-food-actions" class="hidden">
+                    <button onclick="toggleFoodForm()" class="bg-green-500 text-white px-4 py-2 rounded">+ Добавить продукт</button>
+                </div>
+            </div>
+
+            <!-- Форма добавления/редактирования (только для админа) -->
+            <div id="food-form" class="hidden card mb-6 border-2 border-green-200">
+                <h3 id="food-form-title" class="font-bold mb-2">Новый продукт</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+                    <input type="text" id="f-name" placeholder="Название" class="border p-2 rounded">
+                    <input type="number" id="f-protein" placeholder="Белки" class="border p-2 rounded">
+                    <input type="number" id="f-fats" placeholder="Жиры" class="border p-2 rounded">
+                    <input type="number" id="f-carbs" placeholder="Углеводы" class="border p-2 rounded">
+                    <button onclick="saveFood()" class="bg-blue-600 text-white rounded">OK</button>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <input type="text" id="search-food" oninput="searchFood()" placeholder="Поиск по названию..." class="w-full p-2 border rounded shadow-sm">
+            </div>
+
+            <div id="food-list" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Продукты загрузятся сюда -->
+            </div>
+        </section>
+
+        <!-- Секция: Админ-панель -->
+        <section id="admin-section" class="hidden card">
+            <h2 class="text-2xl font-bold mb-4">Управление пользователями</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="p-2">ID</th>
+                            <th class="p-2">Name</th>
+                            <th class="p-2">Email</th>
+                            <th class="p-2">Роль</th>
+                            <th class="p-2">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000';
+        let currentUser = null;
+
+        // Вспомогательная функция для запросов (с куками)
+        async function apiFetch(endpoint, method = 'GET', body = null) {
+            const options = {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include' // Важно для работы с cookies (FastAPI)
+            };
+            if (body) options.body = JSON.stringify(body);
+
+            const response = await fetch(`${API_URL}${endpoint}`, options);
+            if (response.status === 401 && endpoint !== '/user/login/') {
+                setLoggedOutUI();
+            }
+            return response;
+        }
+
+        // Навигация между секциями
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`${id}-section`).classList.remove('hidden');
+
+            if (id === 'foods') loadFoods();
+            if (id === 'admin') loadUsers();
+            if (id === 'profile') loadMe();
+        }
+
+        // --- АВТОРИЗАЦИЯ ---
+
+        async function login(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const res = await apiFetch('/user/login/', 'POST', { email, password });
+            if (res.ok) {
+                alert('Успешный вход!');
+                checkAuth();
+                showSection('home');
+            } else {
+                alert('Ошибка входа');
+            }
+        }
+
+        async function register(e) {
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('reg-name').value,
+                email: document.getElementById('reg-email').value,
+                password: document.getElementById('reg-password').value,
+                weight: parseFloat(document.getElementById('reg-weight').value),
+                fat_percentage: parseFloat(document.getElementById('reg-fat').value) || 0,
+                LBS: parseFloat(document.getElementById('reg-weight').value) * 2.204 // Упрощенный расчет
+            };
+
+            const res = await apiFetch('/user/register/', 'POST', data);
+            if (res.ok) {
+                alert('Регистрация успешна! Теперь войдите.');
+                showSection('login');
+            } else {
+                alert('Ошибка регистрации');
+            }
+        }
+
+        async function logout() {
+            await apiFetch('/user/logout/', 'POST');
+            setLoggedOutUI();
+            showSection('home');
+        }
+
+        async function checkAuth() {
+            const res = await apiFetch('/user/me/');
+            if (res.ok) {
+                currentUser = await res.json();
+                setLoggedInUI(currentUser);
+            } else {
+                setLoggedOutUI();
+            }
+        }
+
+        function setLoggedInUI(user) {
+            document.getElementById('guest-links').classList.add('hidden');
+            document.getElementById('user-links').classList.remove('hidden');
+            document.getElementById('welcome-msg').innerText = `Привет, ${user.name}!`;
+
+            if (user.is_admin || user.is_super_apdmin) {
+                document.getElementById('admin-link').classList.remove('hidden');
+                document.getElementById('admin-food-actions').classList.remove('hidden');
+            }
+        }
+
+        function setLoggedOutUI() {
+            currentUser = null;
+            document.getElementById('guest-links').classList.remove('hidden');
+            document.getElementById('user-links').classList.add('hidden');
+            document.getElementById('admin-link').classList.add('hidden');
+            document.getElementById('admin-food-actions').classList.add('hidden');
+            document.getElementById('welcome-msg').innerText = `Добро пожаловать в дневник питания!`;
+        }
+
+        // --- ПОЛЬЗОВАТЕЛИ ---
+
+        async function loadMe() {
+            const res = await apiFetch('/user/me/');
+            const user = await res.json();
+            const info = document.getElementById('user-info');
+            info.innerHTML = `
+                <p><strong>Email:</strong> ${user.email}</p>
+                <p><strong>Вес:</strong> ${user.weight} кг (${user.LBS.toFixed(1)} lbs)</p>
+                <p><strong>% Жира:</strong> ${user.fat_percentage}%</p>
+                <p><strong>Роль:</strong> ${user.is_super_apdmin ? 'Супер-админ' : (user.is_admin ? 'Админ' : 'Пользователь')}</p>
+            `;
+        }
+
+        async function updateUser(e) {
+            e.preventDefault();
+            const data = {};
+            if (document.getElementById('upd-name').value) data.name = document.getElementById('upd-name').value;
+            if (document.getElementById('upd-weight').value) data.weight = parseFloat(document.getElementById('upd-weight').value);
+            if (document.getElementById('upd-fat').value) data.fat_percentage = parseFloat(document.getElementById('upd-fat').value);
+
+            const res = await apiFetch('/user/update/', 'PUT', data);
+            if (res.ok) { alert('Обновлено!'); loadMe(); }
+        }
+
+        async function deleteMe() {
+            if (confirm('Удалить ваш аккаунт навсегда?')) {
+                const res = await apiFetch('/user/delete_me/', 'DELETE');
+                if (res.ok) logout();
+            }
+        }
+
+        // --- ПРОДУКТЫ (FOOD) ---
+
+        async function loadFoods() {
+            const res = await apiFetch('/food/');
+            const foods = await res.json();
+            renderFoods(foods);
+        }
+
+        function renderFoods(foods) {
+            const list = document.getElementById('food-list');
+            list.innerHTML = foods.map(f => `
+                <div class="card border-l-4 border-blue-500">
+                    <h3 class="font-bold text-lg">${f.name}</h3>
+                    <div class="text-sm text-gray-600">
+                        <p>Белки: ${f.protein}г | Жиры: ${f.fats}г | Углеводы: ${f.carbs}г</p>
+                    </div>
+                    ${currentUser?.is_admin ? `
+                        <div class="mt-2 flex gap-2">
+                            <button onclick="deleteFood('${f.name}')" class="text-red-500 text-xs">Удалить</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        async function searchFood() {
+            const name = document.getElementById('search-food').value;
+            if (!name) return loadFoods();
+            // По вашему ТЗ: /food/by_filte
+            const res = await apiFetch(`/food/by_filte?name=${name}`);
+            if (res.ok) {
+                const food = await res.json();
+                renderFoods(food ? [food] : []);
+            }
+        }
+
+        async function deleteFood(name) {
+            if (confirm(`Удалить ${name}?`)) {
+                await apiFetch(`/food/delete/${name}`, 'DELETE');
+                loadFoods();
+            }
+        }
+
+        function toggleFoodForm() {
+            document.getElementById('food-form').classList.toggle('hidden');
+        }
+
+        async function saveFood() {
+            const data = {
+                name: document.getElementById('f-name').value,
+                protein: parseFloat(document.getElementById('f-protein').value),
+                fats: parseFloat(document.getElementById('f-fats').value),
+                carbs: parseFloat(document.getElementById('f-carbs').value)
+            };
+            const res = await apiFetch('/food/add/', 'POST', data);
+            if (res.ok) {
+                toggleFoodForm();
+                loadFoods();
+            }
+        }
+
+        // --- АДМИН-ПАНЕЛЬ ---
+
+        async function loadUsers() {
+            const res = await apiFetch('/user/');
+            if (!res.ok) return;
+            const users = await res.json();
+            const tbody = document.getElementById('users-table-body');
+            tbody.innerHTML = users.map(u => `
+                <tr class="border-b">
+                    <td class="p-2">${u.id}</td>
+                    <td class="p-2">${u.name}</td>
+                    <td class="p-2">${u.email}</td>
+                    <td class="p-2 text-xs">${u.is_admin ? 'ADMIN' : 'USER'}</td>
+                    <td class="p-2">
+                        ${!u.is_admin ? `<button onclick="makeAdmin(${u.id})" class="text-blue-500 text-xs">Сделать админом</button>` : ''}
+                        <button onclick="deleteUser(${u.id})" class="text-red-500 text-xs ml-2">Удалить</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function makeAdmin(id) {
+            await apiFetch('/user/make_admin/', 'POST', { user_id: id }); // Предполагаем, что API ждет ID
+            loadUsers();
+        }
+
+        // Инициализация
+        checkAuth();
+        showSection('home');
+    </script>
+</body>
+</html>

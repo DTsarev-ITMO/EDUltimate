@@ -12,8 +12,10 @@ DATABASE_URL = settings.get_db_url()
 engine = create_async_engine(url=DATABASE_URL)
 # Создаем фабрику сессий для взаимодействия с базой данных
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
+# Кастомные типы данных
 uniq_str_an = Annotated[str, mapped_column(unique=True)]
 float_def0_an = Annotated[float, mapped_column(default=0)]
+int_pk = Annotated[int, mapped_column(unique=True)]
 
 # Базовый класс для всех моделей
 class Base(AsyncAttrs, DeclarativeBase):

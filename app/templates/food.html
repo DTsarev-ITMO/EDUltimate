@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Все продукты в базе</title>
+</head>
+<body>
+    <h1>Список продуктов</h1>
+    <div>
+        {% for food in foods %}
+        <div>
+            <h2>{{ food.name }}</h2>
+            <p>Белка на 100 грамм: {{ food.protein }} грамм</p>
+            <p>Жиров на 100 грамм: {{ food.fats }} грамм</p>
+            <p>Углеводов на 100 грамм: {{ food.carbs }} грамм</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
