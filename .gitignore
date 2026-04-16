@@ -33,3 +33,6 @@ pgdata/
 # --- Операционная система ---
 .DS_Store
 Thumbs.db
+
+#--- Прочее ---
+todo.txt

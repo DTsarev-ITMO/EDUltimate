@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Устанавливаем рабочую директорию
-WORKDIR /app
+WORKDIR /app/backend
 
 # Отключаем создание .pyc файлов и включаем буферизацию логов
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -19,8 +19,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Копируем остальной код проекта
-COPY . .
+COPY app .
 
 # Команда для запуска (uvicorn)
 # Используем 0.0.0.0, чтобы сервер был доступен снаружи контейнера
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+#CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
