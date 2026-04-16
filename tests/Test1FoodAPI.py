@@ -1,8 +1,7 @@
 import unittest
 import asyncio
-from app.frontend.food.httpx_commands import add_food, get_food_by_name, update_food, delete_food
-from app.frontend.users.httpx_commands import log_in
-from app.food.schemas import ResponseFoodAdd, ResponseFoodUpdate
+from frontend.food.httpx_commands import add_food, get_food_by_name, update_food, delete_food
+from food import ResponseFoodAdd, ResponseFoodUpdate
 
 class FoodAPITestCase(unittest.TestCase):
     def test_01_Food_add(self):

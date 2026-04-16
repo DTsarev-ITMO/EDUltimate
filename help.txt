@@ -1,8 +1,10 @@
 Docker:
 sudo docker ps - посмотреть запущенные контейнеры
 sudo docker compose up -d - собрать контейнеры из docker-compose.yml
+sudo docker compose down -v - удалить все контейнеры
 sudo docker stop fastapi_db fastapi_app - остановить контейнеры
 sudo docker rm -f fastapi_db fastapi_app - удалить контейнеры
+sudo docker logs -f fastapi_app - выводить логи из контейнера
 
 
 Alembic:
@@ -14,3 +16,9 @@ bash скрипты запуска:
 cp .env.example .env
 sudo docker compose up -d
 docker logs -f fastapi_app
+
+sudo docker compose exec app alembic revision --autogenerate -m "Initial revision" - создать ревизию
+sudo docker compose exec app alembic alembic upgrade head - применить последние ревизии
+
+клиентский фронтенд-сервер крутится на порту 1234
+

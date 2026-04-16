@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="">
+    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="API и DB в контейнерах и общаются">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/migration/versions/2ac352773595_add_photo_column.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/migration/versions/2e574864729e_update_users_table.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/migration/versions/509a501037d7_initial_revision.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/migration/versions/906145104639_update_users_table.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/migration/versions/9abbe471ae76_second_revision.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/app/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dish/dao.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dish/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dish/router.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dish/schemas.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/frontend/FrontendSimulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/FrontendSimulation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/frontend/food/httpx_commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/food/httpx_commands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/frontend/users/httpx_commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/users/httpx_commands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/food.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/help" beforeDir="false" afterPath="$PROJECT_DIR$/help.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Test0UserAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Test0UserAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Test1FoodAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Test1FoodAPI.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,9 +28,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Unit Test" />
-        <option value="Python Script" />
         <option value="HTML File" />
         <option value="Dockerfile" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -82,10 +91,11 @@
       <recent name="$PROJECT_DIR$/app/users" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/frontend/food" />
-      <recent name="$PROJECT_DIR$/app/frontend" />
       <recent name="$PROJECT_DIR$/app" />
+      <recent name="$PROJECT_DIR$/frontend" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/app/templates" />
+      <recent name="$PROJECT_DIR$/app/frontend" />
     </key>
   </component>
   <component name="RunManager" selected="Python tests.Python tests in Test0UserAPI.py">
@@ -215,11 +225,66 @@
       <option name="project" value="LOCAL" />
       <updated>1776175688338</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="какие-то проблемы с портами. Фронтенд не подключил.">
+      <option name="closed" value="true" />
+      <created>1776261276768</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1776261276768</updated>
+    </task>
+    <task id="LOCAL-00008" summary="какие-то проблемы с портами. Фронтенд не подключил.">
+      <option name="closed" value="true" />
+      <created>1776261293056</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1776261293056</updated>
+    </task>
+    <task id="LOCAL-00009" summary="API и DB в контейнерах и общаются">
+      <option name="closed" value="true" />
+      <created>1776343719499</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1776343719499</updated>
+    </task>
+    <task id="LOCAL-00010" summary="API и DB в контейнерах и общаются">
+      <option name="closed" value="true" />
+      <created>1776343738008</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1776343738008</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Get, Post, Delete Food реализованы" />
@@ -228,6 +293,20 @@
     <MESSAGE value="Написан RESTfull API для работы с базой данных пользователей: аутентификация и роли" />
     <MESSAGE value="RESTfull API для работы с базой данных пользователей покрыт тестами" />
     <MESSAGE value="Фронтенд навайбкоден, но пока не понятен" />
-    <option name="LAST_COMMIT_MESSAGE" value="Фронтенд навайбкоден, но пока не понятен" />
+    <MESSAGE value="какие-то проблемы с портами. Фронтенд не подключил." />
+    <MESSAGE value="API и DB в контейнерах и общаются" />
+    <option name="LAST_COMMIT_MESSAGE" value="API и DB в контейнерах и общаются" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="NONE" type="python-line">
+          <url>file://$PROJECT_DIR$/app/pages/router.py</url>
+          <line>5</line>
+          <log-expression expression="@router.get('/food')&#10;async def get_food_html(request: Request, foods = Depends(get_all_foods)):&#10;    return templates.TemplateResponse(request=request, name='food.html', context={'foods': foods})" language="Python" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

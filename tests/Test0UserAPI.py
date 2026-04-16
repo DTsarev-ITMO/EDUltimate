@@ -1,6 +1,6 @@
 import unittest
 import asyncio
-from app.frontend.users.httpx_commands import register_user, log_in, get_me, update_me, delete_me
+from frontend.users.httpx_commands import register_user, log_in, get_me, update_me, delete_me
 
 class FoodAPITestCase(unittest.TestCase):
     def test_01_User_register(self):
