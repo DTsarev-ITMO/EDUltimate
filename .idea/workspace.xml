@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="API и DB в контейнерах и общаются">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/app/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dish/dao.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dish/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dish/router.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dish/schemas.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/frontend/FrontendSimulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/FrontendSimulation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/frontend/food/httpx_commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/food/httpx_commands.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/frontend/users/httpx_commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/users/httpx_commands.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/food.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/help" beforeDir="false" afterPath="$PROJECT_DIR$/help.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Test0UserAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Test0UserAPI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Test1FoodAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Test1FoodAPI.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -257,7 +243,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776343738008</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="API и DB в контейнерах и общаются">
+      <option name="closed" value="true" />
+      <created>1776344098831</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1776344098831</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,7 +268,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="dev" />
                       </list>
                     </value>
                   </entry>

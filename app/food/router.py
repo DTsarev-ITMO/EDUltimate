@@ -19,8 +19,7 @@ async def get_student_by_filter(request_body: RBFood = Depends()) -> ResponseFoo
     return rez
 
 @router.post("/add/")
-# async def add_food(food: ResponseFoodAdd, myself: User = Depends(get_current_admin_user)) -> dict:
-async def add_food(food: ResponseFoodAdd) -> dict:
+async def add_food(food: ResponseFoodAdd, myself: User = Depends(get_current_admin_user)) -> dict:
     check = await FoodDAO.add(**food.model_dump())
     if check:
         return {"message": "Продукт успешно добавлен!", "продукт": food}
