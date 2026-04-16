@@ -4,6 +4,7 @@
 1. Проект на GitHUB
 2. RESTfull API для работы с базой данных БЖУ продуктов
 3. RESTfull API для работы с базой данных пользователей: аутентификация и роли
+4. Все в Docker котнейнерах
 
 В процессе:
 1. Написать RESTfull API для работы с базой данных пользовательских рецептов и рационов
@@ -18,8 +19,6 @@
 7. Написать фронтенд для смартфонов на базе андроид и iOS
 
 Инструкции по запуску проекта:
-1. git clone https://github.com/vash-proekt
-2. cp .env.example .env (редактирует пароли, если нужно).
-3. docker compose up -d — Docker сам скачает Postgres, FastAPI и запустит их.
-4. docker compose exec app alembic upgrade head — база сама создаст все нужные таблицы.
-5. (Опционально) Запускает скрипт для наполнения базы: docker compose exec app python seed.py.
+1. git clone https://github.com/DTsarev-ITMO/EDUltimate
+2. cp .env.example .env (редактировать пароли, если нужно).
+3. sudo docker compose up -d — Docker сам скачает Postgres, FastAPI и запустит их, а так же осуществить миграцию
