@@ -11,3 +11,5 @@ bcrypt==4.0.1
 passlib[bcrypt]
 aiohttp
 jinja2
+bs4
+beautifulsoup4
