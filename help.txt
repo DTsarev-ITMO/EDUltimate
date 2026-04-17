@@ -20,5 +20,9 @@ docker logs -f fastapi_app
 sudo docker compose exec app alembic revision --autogenerate -m "Initial revision" - создать ревизию
 sudo docker compose exec app alembic alembic upgrade head - применить последние ревизии
 
-клиентский фронтенд-сервер крутится на порту 1234
+sudo docker system prune -a --volumes - удалить ВСЕ
 
+
+API доступен по адресу http://localhost:8000/docs
+клиентский фронтенд-сервер доступен по адресу http://localhost:5500
+подключиться к БД можно через хост localhost и порт 5433

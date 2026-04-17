@@ -1,4 +1,5 @@
 services:
+  # База данных PostgreSQL
   db:
     image: postgres:15-alpine
     container_name: fastapi_db
@@ -12,8 +13,11 @@ services:
     ports:
       - "${DB_PORT}:${DB_INTERNAL_PORT}"
 
+ # Бэкенд (FastAPI)
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: app/Dockerfile
     container_name: fastapi_app
     restart: always
     command:
@@ -29,5 +33,19 @@ services:
     depends_on:
       - db
 
+ # Фронтенд (Python SimpleHTTPServer)
+  frontend:
+    build: frontend
+    container_name: frontend_app
+    command:
+      sh -c "echo 'Starting frontend server...' && python3 -m http.server ${FRONT_PORT} --bind 0.0.0.0"
+    volumes:
+      - .:/frontend
+    ports:
+      - "${FRONT_PORT}:${FRONT_PORT}"
+    env_file:
+      - .env
+    depends_on:
+      - app
 volumes:
   postgres_data:
