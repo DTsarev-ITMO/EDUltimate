@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="Добавлены калории">
-      <change afterPath="$PROJECT_DIR$/app/scripts/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/scripts/create_admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/scripts/parse_food.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stop.sh" afterDir="false" />
+    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="Доделан парсер и стартовые скрипты. MVP.">
+      <change afterPath="$PROJECT_DIR$/delme.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/init.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/FrontendSimulation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parcer/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/parcer/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/app/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/scripts/create_admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/scripts/create_admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/scripts/parse_food.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/scripts/parse_food.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +76,8 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHELLCHECK.PATH": "/home/dvtsarev/.local/share/JetBrains/PyCharm2025.3/Shell Script/shellcheck",
+    "Shell Script.delme.sh.executor": "Run",
+    "Shell Script.init.sh.executor": "Run",
     "Shell Script.run.sh.executor": "Run",
     "Shell Script.stop.sh.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
@@ -105,7 +103,7 @@
       <recent name="$PROJECT_DIR$/frontend" />
     </key>
   </component>
-  <component name="RunManager" selected="Shell Script.stop.sh">
+  <component name="RunManager" selected="Shell Script.run.sh">
     <configuration name="create_admin (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EDUltimate" />
       <option name="ENV_FILES" value="" />
@@ -129,50 +127,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="delme" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="EDUltimate" />
-      <option name="ENV_FILES" value="" />
+    <configuration name="delme.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/delme.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
       <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app/scripts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/scripts/delme.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
       <method v="2" />
     </configuration>
-    <configuration name="parse_food" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="EDUltimate" />
-      <option name="ENV_FILES" value="" />
+    <configuration name="init.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/init.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/sh" />
       <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app/scripts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/scripts/parse_food.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
       <method v="2" />
     </configuration>
     <configuration name="run.sh" type="ShConfigurationType" temporary="true">
@@ -207,11 +189,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Shell Script.stop.sh" />
-        <item itemvalue="Python.parse_food" />
-        <item itemvalue="Python.create_admin (1)" />
-        <item itemvalue="Python.delme" />
         <item itemvalue="Shell Script.run.sh" />
+        <item itemvalue="Shell Script.stop.sh" />
+        <item itemvalue="Shell Script.init.sh" />
+        <item itemvalue="Shell Script.delme.sh" />
+        <item itemvalue="Python.create_admin (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -350,7 +332,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776681142677</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Доделан парсер и стартовые скрипты. MVP.">
+      <option name="closed" value="true" />
+      <created>1776695781460</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1776695781460</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -392,7 +382,8 @@
     <MESSAGE value="Фронт, бэк и БД в трех контейнерах, общаются между собой, к ним есть доступ извне." />
     <MESSAGE value="Данные парсятся, но не сохраняются." />
     <MESSAGE value="Добавлены калории" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлены калории" />
+    <MESSAGE value="Доделан парсер и стартовые скрипты. MVP." />
+    <option name="LAST_COMMIT_MESSAGE" value="Доделан парсер и стартовые скрипты. MVP." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

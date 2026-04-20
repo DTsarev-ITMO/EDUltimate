@@ -35,3 +35,4 @@ if __name__ == '__main__':
     response = asyncio.run(create_admin())
     # # выдадим админу все права
     make_admin()
+    print('Суперадмин на связи')
