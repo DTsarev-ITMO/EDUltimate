@@ -1,3 +1,5 @@
+Bash скрипты для работы ИЗВНЕ контейнеров
+
 Docker:
 sudo docker ps - посмотреть запущенные контейнеры
 sudo docker compose up -d - собрать контейнеры из docker-compose.yml
@@ -5,23 +7,17 @@ sudo docker compose down -v - удалить все контейнеры
 sudo docker stop fastapi_db fastapi_app - остановить контейнеры
 sudo docker rm -f fastapi_db fastapi_app - удалить контейнеры
 sudo docker logs -f fastapi_app - выводить логи из контейнера
-
+sudo docker system prune -a --volumes - удалить ВСЕ
 
 Alembic:
-alembic revision --autogenerate -m "comment" — создание скрипта на основе изменений в моделях
-alembic upgrade head — применение всех последних миграций
-alembic downgrade -1 — возврат на одну версию назад
+sudo docker compose exec app alembic revision --autogenerate -m "comment" - создать ревизию
+sudo docker compose exec app alembic upgrade head - применение всех последних ревизий
+sudo docker compose exec app alembic downgrade -1 — возврат на одну версию назад
 
-bash скрипты запуска:
+Bash скрипты запуска (превратить в исполняемый файл:
 cp .env.example .env
 sudo docker compose up -d
 docker logs -f fastapi_app
-
-sudo docker compose exec app alembic revision --autogenerate -m "Initial revision" - создать ревизию
-sudo docker compose exec app alembic alembic upgrade head - применить последние ревизии
-
-sudo docker system prune -a --volumes - удалить ВСЕ
-
 
 API доступен по адресу http://localhost:8000/docs
 клиентский фронтенд-сервер доступен по адресу http://localhost:5500

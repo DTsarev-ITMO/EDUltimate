@@ -11,13 +11,14 @@ admin_data = {
     'password': 'password'
 }
 
-async def add_food(name: str, protein: float, fats: float, carbs: float):
+async def add_food(name: str, protein: float, fats: float, carbs: float, calories: float):
     url = 'http://127.0.0.1:8000/food/add/'
     data = {
         "name": name,
         "protein": protein,
         "fats": fats,
-        "carbs": carbs
+        "carbs": carbs,
+        "calories": calories
     }
 
     async with httpx.AsyncClient() as client:
@@ -41,14 +42,16 @@ async def update_food(filter_name: str,
                       name: Optional[str] = None,
                       protein: Optional[float] = None,
                       fats: Optional[float] = None,
-                      carbs: Optional[float] = None):
+                      carbs: Optional[float] = None,
+                      calories: Optional[float] = None):
     url = 'http://127.0.0.1:8000/food/update/'
     data = {
         "filter_name": filter_name,
         "name": name,
         "protein": protein,
         "fats": fats,
-        "carbs": carbs
+        "carbs": carbs,
+        "calories": calories
     }
     data = {k: v for k, v in data.items() if v is not None}
 

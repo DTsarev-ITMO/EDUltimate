@@ -35,8 +35,8 @@
 
         <!-- Секция: Главная (Приветствие) -->
         <section id="home-section" class="text-center">
-            <h2 class="text-4xl font-bold mb-4" id="welcome-msg">Добро пожаловать в дневник питания!</h2>
-            <p class="text-gray-600">Контролируйте КБЖУ и свой прогресс похудения эффективно.</p>
+            <h2 class="text-4xl font-bold mb-4" id="welcome-msg">Добро пожаловать в дневник питания Eating Disorder Ultimate!</h2>
+            <p class="text-gray-600">Поддайтесь своему расстройству пищевого поведения!</p>
         </section>
 
         <!-- Секция: Вход -->
@@ -101,6 +101,7 @@
                     <input type="number" id="f-protein" placeholder="Белки" class="border p-2 rounded">
                     <input type="number" id="f-fats" placeholder="Жиры" class="border p-2 rounded">
                     <input type="number" id="f-carbs" placeholder="Углеводы" class="border p-2 rounded">
+                    <input type="number" id="f-calories" placeholder="Ккал" class="border p-2 rounded">
                     <button onclick="saveFood()" class="bg-blue-600 text-white rounded">OK</button>
                 </div>
             </div>
@@ -284,7 +285,7 @@
                 <div class="card border-l-4 border-blue-500">
                     <h3 class="font-bold text-lg">${f.name}</h3>
                     <div class="text-sm text-gray-600">
-                        <p>Белки: ${f.protein}г | Жиры: ${f.fats}г | Углеводы: ${f.carbs}г</p>
+                        <p>Белки: ${f.protein}г | Жиры: ${f.fats}г | Углеводы: ${f.carbs}г | Ккал: ${f.calories}г</p>
                     </div>
                     ${currentUser?.is_admin ? `
                         <div class="mt-2 flex gap-2">
@@ -298,8 +299,7 @@
         async function searchFood() {
             const name = document.getElementById('search-food').value;
             if (!name) return loadFoods();
-            // По вашему ТЗ: /food/by_filte
-            const res = await apiFetch(`/food/by_filte?name=${name}`);
+            const res = await apiFetch(`/food/by_filter?name=${name}`);
             if (res.ok) {
                 const food = await res.json();
                 renderFoods(food ? [food] : []);
@@ -322,7 +322,8 @@
                 name: document.getElementById('f-name').value,
                 protein: parseFloat(document.getElementById('f-protein').value),
                 fats: parseFloat(document.getElementById('f-fats').value),
-                carbs: parseFloat(document.getElementById('f-carbs').value)
+                carbs: parseFloat(document.getElementById('f-carbs').value),
+                calories: parseFloat(document.getElementById('f-calories').value)
             };
             const res = await apiFetch('/food/add/', 'POST', data);
             if (res.ok) {

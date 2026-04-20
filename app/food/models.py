@@ -6,6 +6,7 @@ class Food(Base):
     protein: Mapped[float_def0_an]
     fats: Mapped[float_def0_an]
     carbs: Mapped[float_def0_an]
+    calories: Mapped[float_def0_an]
 
     def __str__(self):
         return f"{self.__class__.__name__}(id={self.id}, name={self.name})"

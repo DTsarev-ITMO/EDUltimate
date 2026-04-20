@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="Фронт, бэк и БД в трех контейнерах, общаются между собой, к ним есть доступ извне.">
-      <change afterPath="$PROJECT_DIR$/parcer/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parcer/main.py" afterDir="false" />
+    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="Данные парсятся, но не сохраняются.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/food/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/food/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/food/rb.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/food/rb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/food/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/food/router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/food/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/food/schemas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/help.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Test1FoodAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Test1FoodAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/food/httpx_commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/food/httpx_commands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,26 +59,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python tests.Python tests in Test0UserAPI.py.executor": "Run",
-    "Python tests.Python tests in Test1FoodAPI.py.executor": "Run",
-    "Python tests.Python tests in TestFoodAPI.py.executor": "Run",
-    "Python.FrontendSimulation.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "dev",
-    "last_opened_file_path": "/home/dvtsarev/PycharmProjects/EDUltimate/delme",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "terminal"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Python tests in Test0UserAPI.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in Test1FoodAPI.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in TestFoodAPI.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.FrontendSimulation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/dvtsarev/PycharmProjects/EDUltimate/delme&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/delme" />
@@ -88,7 +95,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python tests.Python tests in Test1FoodAPI.py">
     <configuration name="FrontendSimulation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EDUltimate" />
       <option name="ENV_FILES" value="" />
@@ -169,9 +176,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python tests.Python tests in Test0UserAPI.py" />
         <item itemvalue="Python tests.Python tests in Test1FoodAPI.py" />
+        <item itemvalue="Python tests.Python tests in Test0UserAPI.py" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.FrontendSimulation" />
       </list>
     </recent_temporary>
@@ -295,7 +302,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776431447186</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Данные парсятся, но не сохраняются.">
+      <option name="closed" value="true" />
+      <created>1776437065586</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1776437065586</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,7 +350,8 @@
     <MESSAGE value="API и DB в контейнерах и общаются" />
     <MESSAGE value="Исправлены ошибки" />
     <MESSAGE value="Фронт, бэк и БД в трех контейнерах, общаются между собой, к ним есть доступ извне." />
-    <option name="LAST_COMMIT_MESSAGE" value="Фронт, бэк и БД в трех контейнерах, общаются между собой, к ним есть доступ извне." />
+    <MESSAGE value="Данные парсятся, но не сохраняются." />
+    <option name="LAST_COMMIT_MESSAGE" value="Данные парсятся, но не сохраняются." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
