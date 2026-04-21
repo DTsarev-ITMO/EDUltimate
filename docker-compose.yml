@@ -12,6 +12,11 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "${DB_PORT}:${DB_INTERNAL_PORT}"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
  # Бэкенд (FastAPI)
   app:
@@ -21,7 +26,7 @@ services:
     container_name: fastapi_app
     restart: always
     command:
-      sh -c "alembic upgrade head && uvicorn app.main:app --host ${SERVER_HOST} --port ${SERVER_PORT} --reload &"
+      sh -c "alembic upgrade head && uvicorn app.main:app --host ${SERVER_HOST} --port ${SERVER_PORT} --reload"
     volumes:
       - .:/app
     ports:
@@ -31,9 +36,18 @@ services:
     environment:
       - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_INTERNAL_HOST}:${DB_INTERNAL_PORT}/${DB_NAME}
     depends_on:
-      - db
+      db:
+        condition: service_healthy # Ждет, пока БД станет "здоровой"
+    healthcheck:
+      # Проверяем доступность API.
+      test: [ "CMD", "curl", "-f", "http://0.0.0.0:${SERVER_PORT}/docs" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s # Даем приложению 10 сек на загрузку библиотек перед первой проверкой
 
- # Фронтенд (Python SimpleHTTPServer)
+
+  # Фронтенд (Python SimpleHTTPServer)
   frontend:
     build: frontend
     container_name: frontend_app
@@ -46,6 +60,12 @@ services:
     env_file:
       - .env
     depends_on:
-      - app
+      app:
+        condition: service_healthy # Ждет, пока бэкенд станет "здоровым"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:${FRONT_PORT}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 volumes:
   postgres_data:

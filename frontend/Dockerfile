@@ -1,6 +1,9 @@
 # Используем легкий образ Python
 FROM python:3.11-slim
 
+# Установим curl, для healthcheck
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
 # Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /frontend
 
