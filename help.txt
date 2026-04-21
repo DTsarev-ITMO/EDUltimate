@@ -1,3 +1,5 @@
+Bash скрипты для работы ИЗВНЕ контейнеров
+
 Docker:
 sudo docker ps - посмотреть запущенные контейнеры
 sudo docker compose up -d - собрать контейнеры из docker-compose.yml
@@ -5,20 +7,34 @@ sudo docker compose down -v - удалить все контейнеры
 sudo docker stop fastapi_db fastapi_app - остановить контейнеры
 sudo docker rm -f fastapi_db fastapi_app - удалить контейнеры
 sudo docker logs -f fastapi_app - выводить логи из контейнера
-
+sudo docker system prune -a --volumes - удалить ВСЕ
 
 Alembic:
-alembic revision --autogenerate -m "comment" — создание скрипта на основе изменений в моделях
-alembic upgrade head — применение всех последних миграций
-alembic downgrade -1 — возврат на одну версию назад
+sudo docker compose exec app alembic revision --autogenerate -m "comment" - создать ревизию
+sudo docker compose exec app alembic upgrade head - применение всех последних ревизий
+sudo docker compose exec app alembic downgrade -1 — возврат на одну версию назад
 
-bash скрипты запуска:
+Bash скрипты запуска (превратить в исполняемый файл:
 cp .env.example .env
 sudo docker compose up -d
 docker logs -f fastapi_app
 
-sudo docker compose exec app alembic revision --autogenerate -m "Initial revision" - создать ревизию
-sudo docker compose exec app alembic alembic upgrade head - применить последние ревизии
+API доступен по адресу http://localhost:8000/docs
+клиентский фронтенд-сервер доступен по адресу http://localhost:5500
+подключиться к БД можно через хост localhost и порт 5433
 
-клиентский фронтенд-сервер крутится на порту 1234
+Данные БЖУ будем парсить с сайта https://calorizator.ru/product/all (затем добавляем ?page=1 и парсим все до ?page=85)
+Структура записи на сайте:
 
+<td class="views-field views-field-field-picture-fid">
+            <a href="https://calorizator.ru/sites/default/files/imagecache/product_512/product/powerpro-nutsbar.jpg" rel="lightbox[][Батончик Power Pro с арахисом и карамелью с нугой]" class="imagefield imagefield-lightbox2 imagefield-lightbox2-24 imagefield-field_picture imagecache imagecache-field_picture imagecache-24 imagecache-field_picture-24"><img src="https://calorizator.ru/sites/default/files/imagecache/24/product/powerpro-nutsbar.jpg" alt="Батончик Power Pro с арахисом и карамелью с нугой" title="Батончик Power Pro с арахисом и карамелью с нугой" width="24" height="24"/></a>          </td>
+                  <td class="views-field views-field-title active">
+            <a href="/product/sport/powerpro-nutsbar">Батончик Power Pro с арахисом и карамелью с нугой</a>          </td>
+                  <td class="views-field views-field-field-protein-value">
+            16.6          </td>
+                  <td class="views-field views-field-field-fat-value">
+            18.6          </td>
+                  <td class="views-field views-field-field-carbohydrate-value">
+            15.6          </td>
+                  <td class="views-field views-field-field-kcal-value">
+            350          </td>

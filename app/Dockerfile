@@ -7,8 +7,11 @@ RUN apt-get update && apt-get install -y \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем рабочую директорию
-WORKDIR /app/backend
+# Установим curl, для healthcheck
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+# Устанавливаем рабочую директорию внутри контейнера
+WORKDIR /app
 
 # Отключаем создание .pyc файлов и включаем буферизацию логов
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -19,8 +22,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Копируем остальной код проекта
-COPY app .
+COPY . .
 
 # Команда для запуска (uvicorn)
-# Используем 0.0.0.0, чтобы сервер был доступен снаружи контейнера
-#CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD alembic upgrade head && uvicorn app.main:app --host $SERVER_HOST --port $SERVER_PORT --reload &

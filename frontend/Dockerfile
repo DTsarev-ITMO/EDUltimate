@@ -1,15 +1,17 @@
-FROM nginx:alpine
+# Используем легкий образ Python
+FROM python:3.11-slim
 
-# Удаляем стандартный конфиг Nginx
-RUN rm /etc/nginx/conf.d/default.conf
+# Установим curl, для healthcheck
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
-# Копируем наш конфиг
-COPY nginx.conf /etc/nginx/conf.d/
+# Устанавливаем рабочую директорию внутри контейнера
+WORKDIR /frontend
 
-# Копируем файл фронтенда в папку, которую обслуживает Nginx
-COPY ../static/index.html /usr/share/nginx/html/index.html
+# Копируем index.html (и другие файлы, если есть) в контейнер
+COPY . .
 
-# На всякий случай напоминаю, что Dockerfile всегда должен начинаться с импорта базового образа.
-# Для этого используется ключевое слово 'FROM'.
-# Здесь нам нужно импортировать образ python (с DockerHub).
-# В результате мы, в качестве имени образа, указываем 'python', а в качестве версии - 'latest'.
+## Указываем значение FRONT_PORT по умолчанию, если переменная не будет передана
+ENV FRONT_PORT=5500
+
+## Используем shell-форму записи CMD, чтобы переменная подставилась
+CMD python3 -m http.server $FRONT_PORT --bind 0.0.0.0

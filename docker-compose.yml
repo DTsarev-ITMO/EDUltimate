@@ -1,4 +1,5 @@
 services:
+  # База данных PostgreSQL
   db:
     image: postgres:15-alpine
     container_name: fastapi_db
@@ -11,9 +12,17 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "${DB_PORT}:${DB_INTERNAL_PORT}"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
+ # Бэкенд (FastAPI)
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: app/Dockerfile
     container_name: fastapi_app
     restart: always
     command:
@@ -27,7 +36,36 @@ services:
     environment:
       - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_INTERNAL_HOST}:${DB_INTERNAL_PORT}/${DB_NAME}
     depends_on:
-      - db
+      db:
+        condition: service_healthy # Ждет, пока БД станет "здоровой"
+    healthcheck:
+      # Проверяем доступность API.
+      test: [ "CMD", "curl", "-f", "http://0.0.0.0:${SERVER_PORT}/docs" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s # Даем приложению 10 сек на загрузку библиотек перед первой проверкой
 
+
+  # Фронтенд (Python SimpleHTTPServer)
+  frontend:
+    build: frontend
+    container_name: frontend_app
+    command:
+      sh -c "echo 'Starting frontend server...' && python3 -m http.server ${FRONT_PORT} --bind 0.0.0.0"
+    volumes:
+      - .:/frontend
+    ports:
+      - "${FRONT_PORT}:${FRONT_PORT}"
+    env_file:
+      - .env
+    depends_on:
+      app:
+        condition: service_healthy # Ждет, пока бэкенд станет "здоровым"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:${FRONT_PORT}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 volumes:
   postgres_data:
