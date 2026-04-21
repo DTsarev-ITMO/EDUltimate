@@ -22,4 +22,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Команда для запуска (uvicorn)
-CMD alembic upgrade head && uvicorn app.main:app --host $SERVER_HOST --port $SERVER_PORT --reload
+CMD alembic upgrade head && uvicorn app.main:app --host $SERVER_HOST --port $SERVER_PORT --reload &
