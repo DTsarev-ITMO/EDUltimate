@@ -8,7 +8,7 @@ WORKDIR /frontend
 COPY . .
 
 ## Указываем значение FRONT_PORT по умолчанию, если переменная не будет передана
-#ENV FRONT_PORT=5500
+ENV FRONT_PORT=5500
 
 ## Используем shell-форму записи CMD, чтобы переменная подставилась
 CMD python3 -m http.server $FRONT_PORT --bind 0.0.0.0

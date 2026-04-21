@@ -13,3 +13,4 @@ aiohttp
 jinja2
 bs4
 beautifulsoup4
+psycopg2-binary
