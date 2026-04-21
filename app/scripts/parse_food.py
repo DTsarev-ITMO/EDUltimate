@@ -14,7 +14,7 @@ admin_data.pop("name")
 url_login = 'http://127.0.0.1:8000/user/login/'
 url_add_food = 'http://127.0.0.1:8000/food/add/'
 URL_to_parse = 'https://calorizator.ru/product/all'
-max_page = 3
+max_page = 1
 
 headers = {
     'accept': 'application/json',

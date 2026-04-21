@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="Доделан парсер и стартовые скрипты. MVP.">
+    <list default="true" id="eb7041ed-ba0b-429b-a6fb-ce9be7e6d06a" name="Changes" comment="Добавлен healthcheck">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/FrontendSimulation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parcer/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/parcer/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/scripts/parse_food.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/scripts/parse_food.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -342,7 +336,31 @@
       <option name="project" value="LOCAL" />
       <updated>1776695781460</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Все стабильно запускается">
+      <option name="closed" value="true" />
+      <created>1776776281784</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1776776281784</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Все стабильно запускается">
+      <option name="closed" value="true" />
+      <created>1776776296049</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1776776296049</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Добавлен healthcheck">
+      <option name="closed" value="true" />
+      <created>1776777168685</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1776777168685</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -359,7 +377,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/dev" />
+                        <option value="dev" />
                       </list>
                     </value>
                   </entry>
@@ -385,7 +403,9 @@
     <MESSAGE value="Данные парсятся, но не сохраняются." />
     <MESSAGE value="Добавлены калории" />
     <MESSAGE value="Доделан парсер и стартовые скрипты. MVP." />
-    <option name="LAST_COMMIT_MESSAGE" value="Доделан парсер и стартовые скрипты. MVP." />
+    <MESSAGE value="Все стабильно запускается" />
+    <MESSAGE value="Добавлен healthcheck" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлен healthcheck" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
