@@ -9,6 +9,10 @@ class ResponseFoodGet(BaseModel):
     carbs: float = Field(..., ge=0, le=100, description="Содержание углеводов на 100 грамм продукта, от 0 до 100 грамм")
     calories: float = Field(0, ge=0, description="Содержание калорий на 100 грамм продукта, не меньше 0")
 
+    # !!!
+    # model_config = ConfigDict(from_attributes=True) Поиграть с этим во всех схемах
+    # !!!
+
 class ResponseFoodAdd(BaseModel):
     name: str = Field(..., min_length=1, max_length=50, description="Название продукта, от 1 до 50 символов")
     protein: float = Field(0, ge=0, le=100, description="Содержание белка на 100 грамм продукта, от 0 до 100 грамм")

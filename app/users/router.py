@@ -1,6 +1,8 @@
 from fastapi import Response
 from app.users.dao import UserDAO
+from app.diet.dao import DietDAO
 from app.users.schemas import ResponseUserRegister, ResponseUserAuth, ResponseUserMakeAdmin, ResponseUserUpdate, ResponseUserUpdatePassword
+from app.diet.schemas import ResponseDietCreate
 from fastapi import APIRouter, HTTPException, status, Depends
 from app.users.auth import get_password_hash, authenticate_user, create_access_token
 from app.users.dependencies import get_current_user, get_current_admin_user, get_current_super_admin_user
@@ -19,6 +21,8 @@ async def register_user(user_data: ResponseUserRegister) -> dict:
     user_dict = user_data.model_dump()
     user_dict['password'] = get_password_hash(user_data.password)
     await UserDAO.add(**user_dict)
+    user = await UserDAO.find_one_or_none(email=user_data.email)
+    await DietDAO.add(user_id=user.id)
     return {'message': 'Вы успешно зарегистрированы!'}
 
 @router.post("/login/")

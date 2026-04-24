@@ -1,7 +1,8 @@
-# from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import text
 from app.database import Base, uniq_str_an, float_def0_an, int_pk
+from app.diet.models import Diet
+from typing import Optional
 
 class User(Base):
     id: Mapped[int_pk]
@@ -17,6 +18,9 @@ class User(Base):
     is_super_admin: Mapped[bool] = mapped_column(default=False, server_default=text('false'), nullable=False)
 
     extend_existing = True
+
+    # Связь 1:1 с Diet
+    diet: Mapped[Optional["Diet"]] = relationship(back_populates="users", uselist=False)
 
     def __repr__(self):
         return f"{self.__class__.__name__}(id={self.id})"
