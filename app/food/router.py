@@ -12,15 +12,14 @@ async def get_all_foods():
     return await FoodDAO.find_all()
 
 @router.get("/by_filter", summary="Получить один продукт по фильтру")
-async def get_student_by_filter(request_body: RBFood = Depends()) -> ResponseFoodGet | dict:
+async def get_food_by_filter(request_body: RBFood = Depends()) -> ResponseFoodGet | dict:
     rez = await FoodDAO.find_one_or_none(**request_body.to_dict())
     if rez is None:
         return {'message': f'Продукт с указанными параметрами не найден!'}
     return rez
 
 @router.post("/add/")
-# async def add_food(food: ResponseFoodAdd, myself: User = Depends(get_current_admin_user)) -> dict:
-async def add_food(food: ResponseFoodAdd) -> dict:
+async def add_food(food: ResponseFoodAdd, myself: User = Depends(get_current_admin_user)) -> dict:
     check = await FoodDAO.add(**food.model_dump())
     if check:
         return {"message": "Продукт успешно добавлен!", "продукт": food}
