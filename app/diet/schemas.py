@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict
-from app.food.schemas import ResponseFoodGet
+from food.schemas import ResponseFoodGet
 from typing import List
 
 
