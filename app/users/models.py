@@ -15,13 +15,13 @@ class User(Base):
     # extend_existing = True
 
     # Односторонняя связь 1:1 с Diet
-    diet: Mapped["Diet"] = relationship(back_populates="users", uselist=False)
+    diet: Mapped["Diet"] = relationship(back_populates="user", uselist=False)
 
     # Односторонняя связь 1:1 с UserData
-    userData: Mapped["UserData"] = relationship(back_populates="users", uselist=False)
+    userData: Mapped["UserData"] = relationship(back_populates="user", uselist=False)
 
     # Односторонняя связь 1:1 с UserStatus
-    userStatus: Mapped["UserStatus"] = relationship(back_populates="users", uselist=False)
+    userStatus: Mapped["UserStatus"] = relationship(back_populates="user", uselist=False)
 
     def __str__(self):
         return f"{self.__class__.__name__}(id={self.id}, name={self.name})"
@@ -39,7 +39,7 @@ class UserData(Base):
     # extend_existing = True
 
     # Связь 1:1 с User
-    user: Mapped["User"] = relationship(back_populates="user_data", uselist=False)
+    user: Mapped["User"] = relationship(back_populates="userData", uselist=False)
 
     # Вычислительные свойства
     @property
@@ -58,4 +58,4 @@ class UserStatus(Base):
     status: Mapped[UserAdminStatus] = mapped_column(Enum(UserAdminStatus), default=UserAdminStatus.USER)
 
     # Связь 1:1 с User
-    user: Mapped["User"] = relationship(back_populates="user_status", uselist=False)
+    user: Mapped["User"] = relationship(back_populates="userStatus", uselist=False)

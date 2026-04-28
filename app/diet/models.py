@@ -28,14 +28,14 @@ class Diet(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), unique=True)
 
     # Связь M:M с продуктами
-    food_associations: Mapped[List["DietFood"]] = relationship(
-        back_populates="diets",
+    food_associations: Mapped[Optional[List["DietFood"]]] = relationship(
+        back_populates="diet",
         cascade="all, delete-orphan",
         lazy="joined"
     )
 
     # Связь 1:1 с пользователем
-    user: Mapped["User"] = relationship(back_populates="diets")
+    user: Mapped["User"] = relationship(back_populates="diet")
     # Вычислительные свойства
     @property
     def total_calories(self) -> float:

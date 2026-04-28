@@ -28,6 +28,10 @@ class Settings(BaseSettings):
         return (f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASSWORD}@"
                 f"{self.DB_INTERNAL_HOST}:{self.DB_INTERNAL_PORT}/{self.DB_NAME}")
 
+    def get_db_url_external(self):
+        return (f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASSWORD}@"
+                f"{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}")
+
     def get_auth_data(self):
         return {"secret_key": self.SECRET_KEY, "algorithm": self.ALGORITHM}
 
