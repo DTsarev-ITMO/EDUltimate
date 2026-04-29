@@ -10,7 +10,7 @@ class ResponseFoodGet(BaseModel):
     calories: float = Field(0, ge=0, description="Содержание калорий на 100 грамм продукта, не меньше 0")
 
     # !!!
-    # model_config = ConfigDict(from_attributes=True) Поиграть с этим во всех схемах
+    # model_config = ConfigDict(from_attributes=True) #Поиграть с этим во всех схемах
     # !!!
 
 class ResponseFoodAdd(BaseModel):

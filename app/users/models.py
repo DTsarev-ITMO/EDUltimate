@@ -2,6 +2,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Enum, ForeignKey
 from app.database import Base, uniq_str_an, float_def0_an
 import enum
+from app.diet.models import Diet
 
 class User(Base):
     name: Mapped[uniq_str_an]

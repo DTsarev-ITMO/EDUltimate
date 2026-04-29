@@ -1,11 +1,11 @@
 class RBFood:
-    def __init__(self, food_id: int | None = None,
+    def __init__(self, id: int | None = None,
                  name: str | None = None,
                  protein: float | None = None,
                  fats: float | None = None,
                  carbs: float | None = None,
                  calories: float | None = None):
-        self.id = food_id
+        self.id = id
         self.name = name
         self.protein = protein
         self.fats = fats
@@ -18,8 +18,3 @@ class RBFood:
         # Создаем копию словаря, чтобы избежать изменения словаря во время итерации
         filtered_data = {key: value for key, value in data.items() if value is not None}
         return filtered_data
-
-    # Такой класс существует лишь для Food.
-    # Понять, зачем он нужен и либо сделать аналогичные для User, Diet и DietFood,
-    # либо убрать его для Food
-    # Сделать одинаково!

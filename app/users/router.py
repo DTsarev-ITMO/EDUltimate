@@ -1,12 +1,13 @@
 from fastapi import Response
 from app.users.dao import UserDAO
 from app.diet.dao import DietDAO
-from app.users.schemas import ResponseUserRegister, ResponseUserAuth, ResponseUserMakeAdmin, ResponseUserUpdate, ResponseUserUpdatePassword
+from app.users.schemas import ResponseUserRegister, ResponseUserAuth, ResponseUserMakeAdmin, ResponseUserUpdate, ResponseUserUpdatePassword, ResponseUserGet
 # from app.diet.schemas import ResponseDietCreate
 from fastapi import APIRouter, HTTPException, status, Depends
 from app.users.auth import get_password_hash, authenticate_user, create_access_token
 from app.users.dependencies import get_current_user, get_current_admin_user, get_current_super_admin_user
 from app.users.models import User
+from app.users.rb import RBUser
 
 router = APIRouter(prefix='/user', tags=['Работа с пользователями'])
 
@@ -47,6 +48,13 @@ async def logout_user(response: Response):
 @router.get("/")
 async def get_all_users(user_data: User = Depends(get_current_admin_user)):
     return await UserDAO.find_all()
+
+@router.get("/by_filter", summary="Найти пользователя по фильтру")
+async def get_user_by_filter(request_body: RBUser = Depends()) -> ResponseUserGet | dict:
+    user = await UserDAO.find_one_or_none(**request_body.to_dict())
+    if user is None:
+        return {'message': f'Пользователь с указанными параметрами не найден!'}
+    return user
 
 @router.post("/make_admin/")
 async def make_admin(user_to_update_id: ResponseUserMakeAdmin, myself: User = Depends(get_current_super_admin_user)):
