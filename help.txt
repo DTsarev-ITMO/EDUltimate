@@ -3,7 +3,7 @@ Bash скрипты для работы ИЗВНЕ контейнеров
 Docker:
 sudo docker ps - посмотреть запущенные контейнеры
 sudo docker compose up -d - собрать контейнеры из docker-compose.yml
-sudo docker compose down -v - удалить все контейнеры
+sudo docker compose down -v - остановить все контейнеры
 sudo docker stop fastapi_db fastapi_app - остановить контейнеры
 sudo docker rm -f fastapi_db fastapi_app - удалить контейнеры
 sudo docker logs -f fastapi_app - выводить логи из контейнера
