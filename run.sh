@@ -6,10 +6,10 @@ sudo docker compose up -d --wait
 echo "Контейнеры запущены"
 
 # 2. Добавляем суперадмина, если требуется
-python -m app.scripts.create_admin
+#python -m app.scripts.create_admin
 
 # 3. Проверяем базу данных продуктов и парсим данные, если требуется
-python -m app.scripts.parse_food
+#python -m app.scripts.parse_food
 
 # 4. Все работает, сообщаем адреса
 

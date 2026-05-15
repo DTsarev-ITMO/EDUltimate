@@ -1,8 +1,8 @@
 from passlib.context import CryptContext
 from jose import jwt
 from datetime import datetime, timedelta, timezone
-from app.config import settings
-from app.users.dao import UserDAO
+from src.common.config import get_auth_data
+from src.users.dao import UserDAO
 from pydantic import EmailStr
 
 
@@ -20,7 +20,7 @@ def create_access_token(data: dict) -> str:
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + timedelta(days=30)
     to_encode.update({"exp": expire})
-    auth_data = settings.get_auth_data()
+    auth_data = get_auth_data()
     encode_jwt = jwt.encode(to_encode, auth_data['secret_key'], algorithm=auth_data['algorithm'])
     return encode_jwt
 

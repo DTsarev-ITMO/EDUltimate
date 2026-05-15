@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped
-from app.database import Base, uniq_str_an, float_def0_an
+from src.common.database import Base, uniq_str_an, float_def0_an
 
 class Food(Base):
     name: Mapped[uniq_str_an]

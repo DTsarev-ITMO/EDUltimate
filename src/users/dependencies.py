@@ -1,9 +1,9 @@
 from fastapi import Request, HTTPException, status, Depends
 from jose import jwt, JWTError
 from datetime import datetime, timezone
-from app.config import settings
-from app.users.dao import UserDAO
-from app.users.models import User
+from src.common.config import get_auth_data
+from src.users.dao import UserDAO
+from src.users.models import User
 
 def get_token(request: Request):
     token = request.cookies.get('user_access_token')
@@ -13,7 +13,7 @@ def get_token(request: Request):
 
 async def get_current_user(token: str = Depends(get_token)):
     try:
-        auth_data = settings.get_auth_data()
+        auth_data = get_auth_data()
         payload = jwt.decode(token, auth_data['secret_key'], algorithms=[auth_data['algorithm']])
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Токен не валидный!')

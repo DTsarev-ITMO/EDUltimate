@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
-from app.food.dao import FoodDAO
-from app.food.schemas import ResponseFoodGet, ResponseFoodAdd, ResponseFoodUpdate
-from app.food.rb import RBFood
-from app.users.dependencies import get_current_admin_user
-from app.users.models import User
+from src.food.dao import FoodDAO
+from src.food.schemas import ResponseFoodGet, ResponseFoodAdd, ResponseFoodUpdate
+from src.food.rb import RBFood
+from src.users.dependencies import get_current_admin_user
+from src.users.models import User
 
 router = APIRouter(prefix='/food', tags=['Работа с продуктами'])
 

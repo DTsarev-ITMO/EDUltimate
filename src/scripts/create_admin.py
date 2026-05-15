@@ -1,5 +1,5 @@
 import psycopg2
-from app.config import settings
+from src.config import settings
 import httpx
 import asyncio
 

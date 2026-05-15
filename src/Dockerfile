@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 # Устанавливаем рабочую директорию внутри контейнера
-WORKDIR /app
+WORKDIR /src
 
 # Отключаем создание .pyc файлов и включаем буферизацию логов
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -25,4 +25,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Команда для запуска (uvicorn)
-CMD alembic upgrade head && uvicorn app.main:app --host $SERVER_HOST --port $SERVER_PORT --reload &
+CMD alembic upgrade head && uvicorn app.main:app --host $BACKEND_IP --port $BACKEND_PORT --reload &

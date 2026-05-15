@@ -1,6 +1,6 @@
 import psycopg2
 from psycopg2 import sql
-from app.config import settings
+from src.config import settings
 import httpx
 import asyncio
 import requests

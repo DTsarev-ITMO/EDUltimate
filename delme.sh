@@ -1,1 +1,0 @@
-python -m app.scripts.create_admin
