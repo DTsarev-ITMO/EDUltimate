@@ -13,6 +13,8 @@ from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 from src.common.database import DATABASE_INTERNAL_URL, Base
+from src.users.models import User
+from src.food.models import Food
 
 config = context.config
 config.set_main_option("sqlalchemy.url", DATABASE_INTERNAL_URL)

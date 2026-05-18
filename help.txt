@@ -10,9 +10,9 @@ sudo docker logs -f fastapi_app - выводить логи из контейн�
 sudo docker system prune -a --volumes - удалить ВСЕ
 
 Alembic:
-sudo docker compose exec app alembic revision --autogenerate -m "comment" - создать ревизию
-sudo docker compose exec app alembic upgrade head - применение всех последних ревизий
-sudo docker compose exec app alembic downgrade -1 — возврат на одну версию назад
+sudo docker compose exec api alembic revision --autogenerate -m "comment" - создать ревизию
+sudo docker compose exec api alembic upgrade head - применение всех последних ревизий
+sudo docker compose exec api alembic downgrade -1 — возврат на одну версию назад
 
 Bash скрипты запуска (превратить в исполняемый файл:
 cp .env.example .env
