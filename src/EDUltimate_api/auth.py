@@ -2,7 +2,7 @@ from passlib.context import CryptContext
 from jose import jwt
 from datetime import datetime, timedelta, timezone
 from src.common.config import get_auth_data
-from src.users.dao import UserDAO
+from src.common.database.dao import UserDAO
 from pydantic import EmailStr
 
 

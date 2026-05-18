@@ -1,10 +1,10 @@
 from fastapi import Response
-from src.users.dao import UserDAO
-from src.users.schemas import ResponseUserRegister, ResponseUserAuth, ResponseUserMakeAdmin, ResponseUserUpdate, ResponseUserUpdatePassword
+from src.common.database.dao import UserDAO
+from src.common.database.schemas.user_schemas import *
 from fastapi import APIRouter, HTTPException, status, Depends
-from src.users.auth import get_password_hash, authenticate_user, create_access_token
-from src.users.dependencies import get_current_user, get_current_admin_user, get_current_super_admin_user
-from src.users.models import User
+from src.EDUltimate_api.auth import get_password_hash, authenticate_user, create_access_token
+from src.EDUltimate_api.dependencies import get_current_user, get_current_admin_user, get_current_super_admin_user
+from src.common.database.models import User
 
 router = APIRouter(prefix='/user', tags=['Работа с пользователями'])
 

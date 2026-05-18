@@ -44,20 +44,19 @@ async def async_session_maker(external=False) -> Generator:
         await session.close()
 
 
-# Кастомные типы данных
-# id = Annotated[uuid.UUID, mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)]
-uniq_str_an = Annotated[str, mapped_column(unique=True)]
-float_def0_an = Annotated[float, mapped_column(default=0)]
-int_pk = Annotated[int, mapped_column(unique=True)]
+# # Кастомные типы данных
+# uniq_str_an = Annotated[str, mapped_column(unique=True)]
+# float_def0_an = Annotated[float, mapped_column(default=0)]
+# int_pk = Annotated[int, mapped_column(unique=True)]
 
-# Базовый класс для всех моделей
-class Base(AsyncAttrs, DeclarativeBase):
-    __abstract__ = True  # Класс абстрактный, чтобы не создавать отдельную таблицу для него
-
-    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
-    updated_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
-
-    @declared_attr.directive
-    def __tablename__(cls) -> str:
-        return cls.__name__.lower() + 's'
+# # Базовый класс для всех моделей
+# class Base(AsyncAttrs, DeclarativeBase):
+#     __abstract__ = True  # Класс абстрактный, чтобы не создавать отдельную таблицу для него
+#
+#     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+#     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+#     updated_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
+#
+#     @declared_attr.directive
+#     def __tablename__(cls) -> str:
+#         return cls.__name__.lower() + 's'

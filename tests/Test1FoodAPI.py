@@ -1,7 +1,7 @@
 import unittest
 import asyncio
 from tests.food.httpx_commands import add_food, get_food_by_name, update_food, delete_food
-from src.food.schemas import ResponseFoodAdd, ResponseFoodUpdate
+from common.database.schemas.food_schemas import ResponseFoodAdd, ResponseFoodUpdate
 
 class FoodAPITestCase(unittest.TestCase):
     def test_01_Food_add(self):

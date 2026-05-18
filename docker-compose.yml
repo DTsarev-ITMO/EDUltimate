@@ -26,7 +26,7 @@ services:
     container_name: fastapi_app
     restart: always
     command:
-      sh -c "alembic upgrade head && uvicorn src.main:app --host ${BACKEND_IP} --port ${BACKEND_PORT} --reload"
+      sh -c "alembic upgrade head && uvicorn src.app:app --host ${BACKEND_IP} --port ${BACKEND_PORT} --reload"
     volumes:
       - .:/src
     ports:

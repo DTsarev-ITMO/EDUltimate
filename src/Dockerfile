@@ -1,6 +1,12 @@
 # Используем легкий образ Python
 FROM python:3.11-slim
 
+# Обновим зеркала, чтобы все работало гладко
+RUN sed -i 's/deb.debian.org/mirror.yandex.ru/g' /etc/apt/sources.list || true
+RUN sed -i 's/security.debian.org/mirror.yandex.ru/g' /etc/apt/sources.list || true
+RUN sed -i 's/://ubuntu.com' /etc/apt/sources.list || true
+RUN sed -i 's/://ubuntu.com' /etc/apt/sources.list || true
+
 # Устанавливаем системные зависимости для работы PostgreSQL (psycopg2)
 RUN apt-get update && apt-get install -y \
     libpq-dev \
@@ -25,4 +31,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Команда для запуска (uvicorn)
-CMD alembic upgrade head && uvicorn app.main:app --host $BACKEND_IP --port $BACKEND_PORT --reload &
+CMD alembic upgrade head && uvicorn src.app:app --host $BACKEND_IP --port $BACKEND_PORT --reload &

@@ -1,8 +1,9 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.users.router import router as router_user
-from src.food.router import router as router_food
+from src.common.config import BACKEND_IP, BACKEND_PORT
+
+from src.EDUltimate_api.routers import routers
 
 app = FastAPI()
 
@@ -26,5 +27,9 @@ app.add_middleware(
 def read_root():
     return {"Вас приветствует Eating Disorder Ultimate -- приложение для вашего расстройства пищевого поведения."}
 
-app.include_router(router_user)
-app.include_router(router_food)
+for rt in routers:
+    app.include_router(rt)
+
+if __name__ == "__main__":
+    # uvicorn.run(app, host=BACKEND_IP, port=BACKEND_PORT)
+    uvicorn.run(app, host=BACKEND_IP, port=8001)

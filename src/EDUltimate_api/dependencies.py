@@ -2,8 +2,8 @@ from fastapi import Request, HTTPException, status, Depends
 from jose import jwt, JWTError
 from datetime import datetime, timezone
 from src.common.config import get_auth_data
-from src.users.dao import UserDAO
-from src.users.models import User
+from src.common.database.dao import UserDAO
+from src.common.database.models import User
 
 def get_token(request: Request):
     token = request.cookies.get('user_access_token')
