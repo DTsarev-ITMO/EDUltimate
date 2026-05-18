@@ -1,8 +1,8 @@
 """initial
 
-Revision ID: 53a7bb33a222
-Revises: 84bad9585135
-Create Date: 2026-05-18 09:01:37.776105
+Revision ID: a9d448a3866a
+Revises: 
+Create Date: 2026-05-18 09:29:25.286526
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '53a7bb33a222'
-down_revision: Union[str, Sequence[str], None] = '84bad9585135'
+revision: str = 'a9d448a3866a'
+down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -27,7 +27,7 @@ def upgrade() -> None:
     sa.Column('fats', sa.Float(), nullable=False),
     sa.Column('carbs', sa.Float(), nullable=False),
     sa.Column('calories', sa.Float(), nullable=False),
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('id', sa.UUID(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.PrimaryKeyConstraint('id'),
@@ -43,7 +43,7 @@ def upgrade() -> None:
     sa.Column('is_user', sa.Boolean(), server_default=sa.text('true'), nullable=False),
     sa.Column('is_admin', sa.Boolean(), server_default=sa.text('false'), nullable=False),
     sa.Column('is_super_admin', sa.Boolean(), server_default=sa.text('false'), nullable=False),
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('id', sa.UUID(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.PrimaryKeyConstraint('id'),

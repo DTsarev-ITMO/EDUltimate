@@ -13,6 +13,7 @@ Alembic:
 sudo docker compose exec api alembic revision --autogenerate -m "comment" - создать ревизию
 sudo docker compose exec api alembic upgrade head - применение всех последних ревизий
 sudo docker compose exec api alembic downgrade -1 — возврат на одну версию назад
+sudo rm -f src/alembic/versions/*                 - удалить все ревизии (таблицы из БД нужно удалить вручную)
 
 Bash скрипты запуска (превратить в исполняемый файл:
 cp .env.example .env

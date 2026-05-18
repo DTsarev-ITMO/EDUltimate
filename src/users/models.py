@@ -1,10 +1,8 @@
-# from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import text
-from src.common.database import Base, uniq_str_an, float_def0_an, int_pk
+from src.common.database import Base, uniq_str_an, float_def0_an
 
 class User(Base):
-    id: Mapped[int_pk]
     name: Mapped[uniq_str_an]
     email: Mapped[uniq_str_an]
     password: Mapped[str]
