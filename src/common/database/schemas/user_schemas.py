@@ -11,7 +11,7 @@ class ResponseUserGet(BaseModel):
 
 class ResponseUserRegister(BaseModel):
     name: str = Field(..., min_length=1, max_length=50, description="Имя пользователя, от 1 до 50 символов")
-    password_hash: str = Field(..., min_length=1, max_length=50, description="Пароль, от 1 до 50 символов")
+    password: str = Field(..., min_length=1, max_length=50, description="Пароль, от 1 до 50 символов")
     email: EmailStr = Field(..., description="Электронная почта")
 
 class ResponseUserAuth(BaseModel):

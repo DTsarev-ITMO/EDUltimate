@@ -19,7 +19,7 @@ async def register_user(user_data: ResponseUserRegister, external: bool = Query(
             detail='Пользователь уже существует'
         )
     user_dict = user_data.model_dump()
-    user_dict['password_hash'] = get_password_hash(user_data.password_hash)
+    user_dict['password_hash'] = get_password_hash(user_dict.pop("password"))
     await UserDAO.add(external, **user_dict)
     return {'message': 'Вы успешно зарегистрированы!'}
 
