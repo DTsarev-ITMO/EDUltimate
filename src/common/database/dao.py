@@ -1,3 +1,4 @@
+from sqlalchemy.orm import Query
 from sqlalchemy.future import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import update as sqlalchemy_update, delete as sqlalchemy_delete
@@ -7,22 +8,22 @@ from src.common.database.models import User, Food
 class BaseDAO:
     model = None
     @classmethod
-    async def find_all(cls):
-        async with async_session_maker() as session:
+    async def find_all(cls, external: bool=False):
+        async with async_session_maker(external) as session:
             query = select(cls.model)
             result = await session.execute(query)
             return result.scalars().all()
 
     @classmethod
-    async def find_one_or_none(cls, **filter_by):
-        async with async_session_maker() as session:
+    async def find_one_or_none(cls, external: bool=False, **filter_by):
+        async with async_session_maker(external) as session:
             query = select(cls.model).filter_by(**filter_by)
             result = await session.execute(query)
             return result.scalar_one_or_none()
 
     @classmethod
-    async def add(cls, **values):
-        async with async_session_maker() as session:
+    async def add(cls, external: bool=False, **values):
+        async with async_session_maker(external) as session:
             async with session.begin():
                 new_instance = cls.model(**values)
                 session.add(new_instance)
@@ -34,8 +35,8 @@ class BaseDAO:
                 return new_instance
 
     @classmethod
-    async def update(cls, filter_by, **values):
-        async with async_session_maker() as session:
+    async def update(cls, filter_by, external: bool=False, **values):
+        async with async_session_maker(external) as session:
             async with session.begin():
                 query = (
                     sqlalchemy_update(cls.model)
@@ -52,11 +53,11 @@ class BaseDAO:
                 return result.rowcount
 
     @classmethod
-    async def delete(cls, delete_all: bool = False, **filter_by):
+    async def delete(cls, external: bool=False, delete_all: bool = False, **filter_by):
         if not delete_all and not filter_by:
             raise ValueError("Необходимо указать хотя бы один параметр для удаления.")
 
-        async with async_session_maker() as session:
+        async with async_session_maker(external) as session:
             async with session.begin():
                 query = sqlalchemy_delete(cls.model).filter_by(**filter_by)
                 result = await session.execute(query)

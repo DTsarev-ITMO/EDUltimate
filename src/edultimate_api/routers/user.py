@@ -1,29 +1,31 @@
-from fastapi import Response
+from fastapi import Response, Query
+# from sqlalchemy.orm import
+
 from src.common.database.dao import UserDAO
 from src.common.database.schemas.user_schemas import *
 from fastapi import APIRouter, HTTPException, status, Depends
-from src.EDUltimate_api.auth import get_password_hash, authenticate_user, create_access_token
-from src.EDUltimate_api.dependencies import get_current_user, get_current_admin_user, get_current_super_admin_user
+from src.edultimate_api.auth import get_password_hash, authenticate_user, create_access_token
+from src.edultimate_api.dependencies import get_current_user, get_current_admin_user, get_current_super_admin_user
 from src.common.database.models import User
 
 router = APIRouter(prefix='/user', tags=['Работа с пользователями'])
 
 @router.post("/register/")
-async def register_user(user_data: ResponseUserRegister) -> dict:
-    user = await UserDAO.find_one_or_none(email=user_data.email)
+async def register_user(user_data: ResponseUserRegister, external: bool = Query(default=False)) -> dict:
+    user = await UserDAO.find_one_or_none(external, email=user_data.email)
     if user:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail='Пользователь уже существует'
         )
     user_dict = user_data.model_dump()
-    user_dict['password'] = get_password_hash(user_data.password)
-    await UserDAO.add(**user_dict)
+    user_dict['password_hash'] = get_password_hash(user_data.password_hash)
+    await UserDAO.add(external, **user_dict)
     return {'message': 'Вы успешно зарегистрированы!'}
 
 @router.post("/login/")
 async def auth_user(response: Response, user_data: ResponseUserAuth):
-    check = await authenticate_user(email=user_data.email, password=user_data.password)
+    check = await authenticate_user(email=user_data.email, password=user_data.password_hash)
     if check is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail='Неверная почта или пароль')

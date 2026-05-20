@@ -1,17 +1,14 @@
-# Используем легкий образ Python
-FROM python:3.11-slim
+FROM cr.yandex/mirror/library/python:3.11-slim
 
-# Установим curl, для healthcheck
+# Переключаем репозитории на зеркала Yandex
+RUN sed -i 's/deb.debian.org/mirror.yandex.ru/g' /etc/apt/sources.list.d/debian.sources || true
+RUN sed -i 's/security.debian.org/mirror.yandex.ru/g' /etc/apt/sources.list.d/debian.sources || true
+
+# Установим curl для healthcheck
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /frontend
-
-# Копируем index.html (и другие файлы, если есть) в контейнер
 COPY . .
 
-## Указываем значение FRONT_PORT по умолчанию, если переменная не будет передана
 ENV FRONT_PORT=5500
-
-## Используем shell-форму записи CMD, чтобы переменная подставилась
 CMD python3 -m http.server $FRONT_PORT --bind 0.0.0.0

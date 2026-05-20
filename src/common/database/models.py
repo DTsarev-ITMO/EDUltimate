@@ -1,18 +1,11 @@
-from typing import Generator, Annotated
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession, create_async_engine, AsyncAttrs
-from src.common.config import DB_USER, DB_PASSWORD, DB_NAME, DB_EXTERNAL_IP, DB_EXTERNAL_PORT, DB_INTERNAL_IP, DB_INTERNAL_PORT
+import enum
+from sqlalchemy import Enum, text, func, ForeignKey
+from typing import Annotated
+from sqlalchemy.ext.asyncio import AsyncAttrs
 from datetime import datetime
-from sqlalchemy import func
-from sqlalchemy.orm import DeclarativeBase, declared_attr, Mapped, mapped_column
-from contextlib import asynccontextmanager
-from dotenv import load_dotenv
+from sqlalchemy.orm import DeclarativeBase, declared_attr, Mapped, mapped_column, relationship
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
-
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import text
-# from src.common.database.database import Base, uniq_str_an, float_def0_an
-
 
 # Кастомные типы данных
 uniq_str_an = Annotated[str, mapped_column(unique=True)]
@@ -36,24 +29,36 @@ class Base(AsyncAttrs, DeclarativeBase):
 ###########################################################
 ### Работа с пользователями ###
 ###########################################################
+class UserRole(enum.Enum):
+    USER = "user"
+    ADMIN = "admin"
+    SUPER_ADMIN = "super_admin"
 
 
 class User(Base):
     name: Mapped[uniq_str_an]
     email: Mapped[uniq_str_an]
-    password: Mapped[str]
-    weight: Mapped[float_def0_an]
-    LBS: Mapped[float_def0_an]
-    fat_percentage: Mapped[float_def0_an]
+    password_hash: Mapped[str]
 
-    is_user: Mapped[bool] = mapped_column(default=True, server_default=text('true'), nullable=False)
-    is_admin: Mapped[bool] = mapped_column(default=False, server_default=text('false'), nullable=False)
-    is_super_admin: Mapped[bool] = mapped_column(default=False, server_default=text('false'), nullable=False)
+    role: Mapped[UserRole] = mapped_column(
+        Enum(UserRole),
+        default=UserRole.USER,
+        nullable=False
+    )
+
+    vital: Mapped["UserVital"] = relationship(back_populates="user", uselist=False, lazy="joined")
+    diet: Mapped["Diet"] = relationship(back_populates="user", uselist=False, lazy="joined")
 
     extend_existing = True
 
-    def __repr__(self):
-        return f"{self.__class__.__name__}(id={self.id})"
+
+class UserVital(Base):
+    weight: Mapped[float_def0_an]
+    LBS: Mapped[float_def0_an]
+    fat_percentage: Mapped[float_def0_an]
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+
+    user: Mapped["User"] = relationship(back_populates="vital")
 
 
 ###########################################################
@@ -68,8 +73,39 @@ class Food(Base):
     carbs: Mapped[float_def0_an]
     calories: Mapped[float_def0_an]
 
-    def __str__(self):
-        return f"{self.__class__.__name__}(id={self.id}, name={self.name})"
 
-    def __repr__(self):
-        return str(self)
+class DietFood(Base):
+    __tablename__ = "diet_foods"
+
+    diet_id: Mapped[int] = mapped_column(ForeignKey("diets.id", ondelete="CASCADE"), primary_key=True)
+    food_id: Mapped[int] = mapped_column(ForeignKey("foods.id", ondelete="CASCADE"), primary_key=True)
+
+    mass: Mapped[float]
+
+    diet: Mapped["Diet"] = relationship(back_populates="food_associations")
+    food: Mapped["Food"] = relationship()
+
+
+class Diet(Base):
+    total_protein: Mapped[float] = mapped_column(default=0.0)
+    total_fats: Mapped[float] = mapped_column(default=0.0)
+    total_carbs: Mapped[float] = mapped_column(default=0.0)
+    total_calories: Mapped[float] = mapped_column(default=0.0)
+
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), unique=True)
+    user: Mapped["User"] = relationship(back_populates="diet")
+
+    food_associations: Mapped[list["DietFood"]] = relationship(back_populates="diet", cascade="all, delete-orphan")
+
+    def calculate_totals(self) -> None:
+        self.total_protein = 0.0
+        self.total_fats = 0.0
+        self.total_carbs = 0.0
+        self.total_calories = 0.0
+
+        for assoc in self.food_associations:
+            multiplier = assoc.mass / 100.0
+            self.total_protein += assoc.food.protein * multiplier
+            self.total_fats += assoc.food.fats * multiplier
+            self.total_carbs += assoc.food.carbs * multiplier
+            self.total_calories += assoc.food.calories * multiplier

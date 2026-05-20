@@ -34,7 +34,7 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_INTERNAL_IP}:${DB_INTERNAL_PORT}/${DB_NAME}
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@$db:${DB_INTERNAL_PORT}/${DB_NAME}
     depends_on:
       db:
         condition: service_healthy # Ждет, пока БД станет "здоровой"

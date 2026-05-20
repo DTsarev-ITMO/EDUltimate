@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.common.config import BACKEND_IP, BACKEND_PORT
 
-from src.EDUltimate_api.routers import routers
+from src.edultimate_api.routers import routers
 
 app = FastAPI()
 

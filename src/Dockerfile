@@ -1,34 +1,23 @@
-# Используем легкий образ Python
-FROM python:3.11-slim
+FROM cr.yandex/mirror/library/python:3.11-slim
 
-# Обновим зеркала, чтобы все работало гладко
-RUN sed -i 's/deb.debian.org/mirror.yandex.ru/g' /etc/apt/sources.list || true
-RUN sed -i 's/security.debian.org/mirror.yandex.ru/g' /etc/apt/sources.list || true
-RUN sed -i 's/://ubuntu.com' /etc/apt/sources.list || true
-RUN sed -i 's/://ubuntu.com' /etc/apt/sources.list || true
+# Переключаем репозитории на зеркала Yandex
+RUN sed -i 's/deb.debian.org/mirror.yandex.ru/g' /etc/apt/sources.list.d/debian.sources || true
+RUN sed -i 's/security.debian.org/mirror.yandex.ru/g' /etc/apt/sources.list.d/debian.sources || true
 
-# Устанавливаем системные зависимости для работы PostgreSQL (psycopg2)
+# Объединяем установку всех системных пакетов в один шаг
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Установим curl, для healthcheck
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
-
-# Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /src
-
-# Отключаем создание .pyc файлов и включаем буферизацию логов
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Сначала копируем только requirements, чтобы закэшировать установку библиотек
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Копируем остальной код проекта
 COPY . .
 
-# Команда для запуска (uvicorn)
-CMD alembic upgrade head && uvicorn src.app:app --host $BACKEND_IP --port $BACKEND_PORT --reload &
+CMD alembic upgrade head && uvicorn src.app:app --host $BACKEND_IP --port $BACKEND_PORT --reload
