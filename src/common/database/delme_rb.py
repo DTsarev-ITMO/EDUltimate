@@ -1,5 +1,5 @@
 class RBFood:
-    def __init__(self, food_id: int | None = None,
+    def __init__(self, food_id: str | None = None,
                  name: str | None = None,
                  protein: float | None = None,
                  fats: float | None = None,

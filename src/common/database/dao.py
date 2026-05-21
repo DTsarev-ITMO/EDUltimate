@@ -1,4 +1,3 @@
-from sqlalchemy.orm import Query
 from sqlalchemy.future import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import update as sqlalchemy_update, delete as sqlalchemy_delete

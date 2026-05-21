@@ -2,9 +2,8 @@
 This module sets up the asynchronous database connection using SQLAlchemy and provides session management for FastAPI as well as internal Python usage.
 """
 
-from typing import Generator, Annotated
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession, create_async_engine, AsyncAttrs
-from src.common.config import DB_USER, DB_PASSWORD, DB_NAME, DB_EXTERNAL_IP, DB_EXTERNAL_PORT, DB_INTERNAL_IP, DB_INTERNAL_PORT
+from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession, create_async_engine
+from src.common.config import DB_USER, DB_PASSWORD, DB_NAME, DB_EXTERNAL_IP, DB_EXTERNAL_PORT, DB_INTERNAL_PORT
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from typing import AsyncGenerator

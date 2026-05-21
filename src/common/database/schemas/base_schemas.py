@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 import uuid
 
-class ResponseGetID(BaseModel):
+class RequestGetID(BaseModel):
     id: uuid.UUID

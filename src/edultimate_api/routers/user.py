@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends, Response, Query
 from src.common.database.dao import UserDAO
 from src.common.database.schemas.user_schemas import *
-from src.common.database.schemas.base_schemas import ResponseGetID
+from src.common.database.schemas.base_schemas import RequestGetID
 from src.edultimate_api.auth import get_password_hash, authenticate_user, create_access_token
 from src.edultimate_api.dependencies import get_current_user, get_current_admin_user, get_current_super_admin_user
 from src.common.database.models import User
@@ -55,7 +55,7 @@ async def get_all_users(current_user: User = Depends(get_current_admin_user),
 
 
 @router.post("/make_admin/")
-async def make_admin(user_to_update_id: ResponseGetID, current_user: User = Depends(get_current_super_admin_user),
+async def make_admin(user_to_update_id: RequestGetID, current_user: User = Depends(get_current_super_admin_user),
                      external: bool = Query(default=False)) -> dict:
     check = await UserDAO.update(filter_by={'id': user_to_update_id}, is_admin=True)
     new_admin = await UserDAO.find_one_or_none(external=external, id=user_to_update_id)
@@ -109,7 +109,7 @@ async def delete_me(password: ResponseCheckPassword, current_user: User = Depend
 
 
 @router.delete("/delete/")
-async def delete_user(user_to_delete_id: ResponseGetID, current_user: User = Depends(get_current_super_admin_user),
+async def delete_user(user_to_delete_id: RequestGetID, current_user: User = Depends(get_current_super_admin_user),
                       external: bool = Query(default=False)) -> dict:
     check = await UserDAO.delete(external=external, id=user_to_delete_id)
     if check:

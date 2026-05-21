@@ -1,6 +1,6 @@
 import enum
-from sqlalchemy import Enum, Text, func, ForeignKey
-from typing import Annotated, List
+from sqlalchemy import Enum, func, ForeignKey
+from typing import Annotated
 from sqlalchemy.ext.asyncio import AsyncAttrs
 from datetime import datetime
 from sqlalchemy.orm import DeclarativeBase, declared_attr, Mapped, mapped_column, relationship
