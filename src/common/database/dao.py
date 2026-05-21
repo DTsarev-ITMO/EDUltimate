@@ -9,21 +9,21 @@ class BaseDAO:
     model = None
     @classmethod
     async def find_all(cls, external: bool=False):
-        async with async_session_maker(external) as session:
+        async with async_session_maker(external=external) as session:
             query = select(cls.model)
             result = await session.execute(query)
             return result.scalars().all()
 
     @classmethod
     async def find_one_or_none(cls, external: bool=False, **filter_by):
-        async with async_session_maker(external) as session:
+        async with async_session_maker(external=external) as session:
             query = select(cls.model).filter_by(**filter_by)
             result = await session.execute(query)
             return result.scalar_one_or_none()
 
     @classmethod
     async def add(cls, external: bool=False, **values):
-        async with async_session_maker(external) as session:
+        async with async_session_maker(external=external) as session:
             async with session.begin():
                 new_instance = cls.model(**values)
                 session.add(new_instance)
@@ -36,7 +36,7 @@ class BaseDAO:
 
     @classmethod
     async def update(cls, filter_by, external: bool=False, **values):
-        async with async_session_maker(external) as session:
+        async with async_session_maker(external=external) as session:
             async with session.begin():
                 query = (
                     sqlalchemy_update(cls.model)
@@ -57,7 +57,7 @@ class BaseDAO:
         if not delete_all and not filter_by:
             raise ValueError("Необходимо указать хотя бы один параметр для удаления.")
 
-        async with async_session_maker(external) as session:
+        async with async_session_maker(external=external) as session:
             async with session.begin():
                 query = sqlalchemy_delete(cls.model).filter_by(**filter_by)
                 result = await session.execute(query)

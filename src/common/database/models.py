@@ -1,6 +1,6 @@
 import enum
-from sqlalchemy import Enum, text, func, ForeignKey
-from typing import Annotated
+from sqlalchemy import Enum, Text, func, ForeignKey
+from typing import Annotated, List
 from sqlalchemy.ext.asyncio import AsyncAttrs
 from datetime import datetime
 from sqlalchemy.orm import DeclarativeBase, declared_attr, Mapped, mapped_column, relationship
@@ -46,11 +46,24 @@ class User(Base):
         nullable=False
     )
 
+    # tokens: Mapped[List["Token"]] = relationship('Token', back_populates='user', lazy='selectin')
     vital: Mapped["UserVital"] = relationship(back_populates="user", uselist=False, lazy="joined")
     diet: Mapped["Diet"] = relationship(back_populates="user", uselist=False, lazy="joined")
 
     extend_existing = True
 
+# class Token(Base, AsyncAttrs):
+#     """
+#     Stores authentication tokens for user sessions.
+#     This model stores tokens used for user authentication, such as refresh tokens for maintaining user sessions.
+#     """
+#
+#     refresh_token: Mapped[str] = mapped_column(Text, nullable=False, unique=True, index=True)
+#     checker: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+#
+#     user_id: Mapped[uuid.UUID] = mapped_column(
+#         UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
+#     user: Mapped["User"] = relationship('User', back_populates='tokens', lazy='selectin')
 
 class UserVital(Base):
     weight: Mapped[float_def0_an]

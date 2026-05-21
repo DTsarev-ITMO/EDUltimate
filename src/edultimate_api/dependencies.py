@@ -3,15 +3,17 @@ from jose import jwt, JWTError
 from datetime import datetime, timezone
 from src.common.config import get_auth_data
 from src.common.database.dao import UserDAO
-from src.common.database.models import User
+from src.common.database.models import User, UserRole
 
-def get_token(request: Request):
+
+def get_token(request: Request) -> str:
     token = request.cookies.get('user_access_token')
     if not token:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Token not found')
     return token
 
-async def get_current_user(token: str = Depends(get_token)):
+
+async def get_current_user(token: str = Depends(get_token)) -> User:
     try:
         auth_data = get_auth_data()
         payload = jwt.decode(token, auth_data['secret_key'], algorithms=[auth_data['algorithm']])
@@ -27,18 +29,20 @@ async def get_current_user(token: str = Depends(get_token)):
     if not user_id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Не найден ID пользователя')
 
-    user = await UserDAO.find_one_or_none(id=int(user_id))
+    user = await UserDAO.find_one_or_none(id=user_id)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='User not found')
 
     return user
 
-async def get_current_admin_user(current_user: User = Depends(get_current_user)):
-    if current_user.is_admin:
+
+async def get_current_admin_user(current_user: User = Depends(get_current_user)) -> User:
+    if current_user.role == UserRole.ADMIN or current_user.role == UserRole.ADMIN:
         return current_user
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Недостаточно прав!')
 
-async def get_current_super_admin_user(current_user: User = Depends(get_current_user)):
-    if current_user.is_super_admin:
+
+async def get_current_super_admin_user(current_user: User = Depends(get_current_user)) -> User:
+    if current_user.role == UserRole.SUPER_ADMIN:
         return current_user
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Недостаточно прав!')
