@@ -7,7 +7,7 @@ sudo docker compose down -v - остановить все контейнеры
 sudo docker stop fastapi_db fastapi_app frontend_app - остановить контейнеры
 sudo docker rm -f fastapi_db fastapi_app frontend_app - удалить контейнеры
 sudo docker logs -f fastapi_app - выводить логи из контейнера
-sudo docker system prune -a --volumes - удалить ВСЕ
+sudo docker system prune -a --volumesв - удалить ВСЕ
 
 Alembic:
 sudo docker compose exec api alembic revision --autogenerate -m "comment" - создать ревизию

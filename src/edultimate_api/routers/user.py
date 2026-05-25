@@ -1,18 +1,19 @@
 from fastapi import APIRouter, HTTPException, status, Depends, Response, Query
-from src.common.database.dao import UserDAO
+from src.common.database.dao import UserDAO, UserVitalDAO
 from src.common.database.schemas.user_schemas import *
-from src.common.database.schemas.base_schemas import RequestGetID
+from src.common.database.schemas.base_schemas import RequestIDGet
 from src.edultimate_api.auth import get_password_hash, authenticate_user, create_access_token
 from src.edultimate_api.dependencies import get_current_user, get_current_admin_user, get_current_super_admin_user
 from src.common.database.models import User
-from typing import Optional
 
 router = APIRouter(prefix='/user', tags=['Работа с пользователями'])
-
+external = False
 
 @router.post("/register/")
-async def register_user(user_data: ResponseUserRegister,
-                        external: bool = Query(default=False)) -> dict:
+async def register_user(
+        user_data: RequestUserRegister,
+        # external: bool = Query(default=False)
+) -> dict:
     user = await UserDAO.find_one_or_none(external=external, email=user_data.email)
     if user:
         raise HTTPException(
@@ -21,13 +22,15 @@ async def register_user(user_data: ResponseUserRegister,
         )
     user_dict = user_data.model_dump()
     user_dict['password_hash'] = get_password_hash(user_dict.pop("password"))
-    await UserDAO.add(external, **user_dict)
+    await UserDAO.add(external=external, **user_dict)
     return {'message': 'Вы успешно зарегистрированы!'}
 
 
 @router.post("/login/")
-async def auth_user(response: Response, user_data: ResponseUserAuth,
-                    external: bool = Query(default=False)) -> dict:
+async def auth_user(
+        response: Response, user_data: RequestUserAuth,
+        # external: bool = Query(default=False)
+) -> dict:
     check = await authenticate_user(external=external, email=user_data.email, password=user_data.password)
     if check is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
@@ -49,25 +52,33 @@ async def logout_user(response: Response) -> dict:
 
 
 @router.get("/")
-async def get_all_users(current_user: User = Depends(get_current_admin_user),
-                        external: bool = Query(default=False)) -> Optional[list[User]]:
+async def get_all_users(
+        current_user: User = Depends(get_current_admin_user),
+        # external: bool = Query(default=False)
+) -> list[ResponseUserGet] | None:
     return await UserDAO.find_all(external=external)
 
 
 @router.post("/make_admin/")
-async def make_admin(user_to_update_id: RequestGetID, current_user: User = Depends(get_current_super_admin_user),
-                     external: bool = Query(default=False)) -> dict:
-    check = await UserDAO.update(filter_by={'id': user_to_update_id}, is_admin=True)
-    new_admin = await UserDAO.find_one_or_none(external=external, id=user_to_update_id)
+async def make_admin(
+        user_to_update_id: RequestIDGet,
+        current_user: User = Depends(get_current_super_admin_user),
+        # external: bool = Query(default=False)
+) -> dict:
+    check = await UserDAO.update(filter_by={'id': user_to_update_id}, role=UserRole.ADMIN)
     if check:
+        new_admin = await UserDAO.find_one_or_none(external=external, id=user_to_update_id)
         return {"message": "Запись успешно обновлена!", "Новый администратор": new_admin}
     else:
         return {"message": "Ошибка при добавлении администратора!"}
 
 
 @router.put("/update/")
-async def update(user_data: ResponseUserUpdate, current_user: User = Depends(get_current_user),
-                 external: bool = Query(default=False)) -> dict:
+async def update(
+        user_data: RequestUserUpdate,
+        current_user: User = Depends(get_current_user),
+        # external: bool = Query(default=False)
+) -> dict:
     check = await UserDAO.update(external=external, filter_by={'id': current_user.id},
                                  **user_data.model_dump(exclude_none=True))
     if check:
@@ -77,8 +88,12 @@ async def update(user_data: ResponseUserUpdate, current_user: User = Depends(get
 
 
 @router.put("/update_password/")
-async def update(old_password: ResponseCheckPassword, new_password: ResponseUserUpdatePassword,
-                 current_user: User = Depends(get_current_user), external: bool = Query(default=False)) -> dict:
+async def update(
+        old_password: RequestCheckPassword,
+        new_password: RequestUserUpdatePassword,
+        current_user: User = Depends(get_current_user),
+        # external: bool = Query(default=False)
+) -> dict:
     check = await authenticate_user(email=current_user.email, password=old_password.password)
     if check is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
@@ -95,8 +110,11 @@ async def update(old_password: ResponseCheckPassword, new_password: ResponseUser
 
 
 @router.delete("/delete_me/")
-async def delete_me(password: ResponseCheckPassword, current_user: User = Depends(get_current_user),
-                    external: bool = Query(default=False)) -> dict:
+async def delete_me(
+        password: RequestCheckPassword,
+        current_user: User = Depends(get_current_user),
+        # external: bool = Query(default=False)
+) -> dict:
     check = await authenticate_user(email=current_user.email, password=password.password)
     if check is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
@@ -109,10 +127,49 @@ async def delete_me(password: ResponseCheckPassword, current_user: User = Depend
 
 
 @router.delete("/delete/")
-async def delete_user(user_to_delete_id: RequestGetID, current_user: User = Depends(get_current_super_admin_user),
-                      external: bool = Query(default=False)) -> dict:
+async def delete_user(
+        user_to_delete_id: RequestIDGet,
+        current_user: User = Depends(get_current_super_admin_user),
+        # external: bool = Query(default=False)
+) -> dict:
     check = await UserDAO.delete(external=external, id=user_to_delete_id)
     if check:
         return {"message": f"Аккаунт успешно удален!"}
     else:
         return {"message": "Ошибка при удалении аккаунта"}
+
+#######################################################################
+# UserVitals выделить в отдельный роутер
+#######################################################################
+
+# @router.post("/create/")
+# async def create_vitals(vitals: UserVitalCreate, external: bool = Query(default=False),
+#                    current_user: User = Depends(get_current_user)) -> dict:
+#     if vitals.fat_percentage is None and vitals.LBS is not None:
+#         vitals.fat_percentage = (1 - vitals.LBS / vitals.weight) * 100
+#     elif vitals.fat_percentage is not None and vitals.LBS is None:
+#         vitals.LBS = vitals.weight * (1 - vitals.fat_percentage / 100)
+#     elif vitals.fat_percentage is not None and vitals.LBS is not None:
+#         if vitals.LBS != vitals.weight * (1 - vitals.fat_percentage / 100):
+#             raise HTTPException(status_code=422, detail='Неверно введены сухая масса или процент жира. Попробуйте ввести что-то одно.')
+#     check = await UserVitalDAO.add(external=external, **vitals.model_dump())
+#     if check:
+#         return {"message": "Данные сохранены!"}
+#     else:
+#         return {"message": "Ошибка при сохранении данных!"}
+#
+# @router.post("/get_all/")
+# async def get_all_vitals(vitals: UserVitalCreate, external: bool = Query(default=False),
+#                    current_user: User = Depends(get_current_user)) -> dict:
+#     if vitals.fat_percentage is None and vitals.LBS is not None:
+#         vitals.fat_percentage = (1 - vitals.LBS / vitals.weight) * 100
+#     elif vitals.fat_percentage is not None and vitals.LBS is None:
+#         vitals.LBS = vitals.weight * (1 - vitals.fat_percentage / 100)
+#     elif vitals.fat_percentage is not None and vitals.LBS is not None:
+#         if vitals.LBS != vitals.weight * (1 - vitals.fat_percentage / 100):
+#             raise HTTPException(status_code=422, detail='Неверно введены сухая масса или процент жира. Попробуйте ввести что-то одно.')
+#     check = await UserVitalDAO.add(external=external, **vitals.model_dump())
+#     if check:
+#         return {"message": "Данные сохранены!"}
+#     else:
+#         return {"message": "Ошибка при сохранении данных!"}

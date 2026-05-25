@@ -1,38 +1,48 @@
-import psycopg2
-from src.config import settings
-import httpx
 import asyncio
+from pydantic import BaseModel, Field, EmailStr
+from edultimate_api.routers.user import external
+from src.common.database.models import UserRole
+from src.common.database.dao import UserDAO
+from src.edultimate_api.auth import get_password_hash
+from fastapi import HTTPException, status
 
-db_data = settings.get_data_for_db_external()
-admin_create_data = settings.get_admin_data()
-admin_data = settings.get_admin_data()
-admin_data.pop("name")
+external = True
 
-url_add_user = 'http://127.0.0.1:8000/user/register/'
-url_login = 'http://127.0.0.1:8000/user/login/'
+class RequestAdminCreation(BaseModel):
+    name: str = Field(..., min_length=1, max_length=50, description="Имя пользователя, от 1 до 50 символов")
+    password: str = Field(..., min_length=1, max_length=50, description="Пароль, от 1 до 50 символов")
+    email: EmailStr = Field(..., description="Электронная почта")
+    role: UserRole
 
-headers = {
-    'accept': 'application/json',
-    'Content-Type': 'application/json'
-}
-
-async def create_admin():
-    async with httpx.AsyncClient() as client:
-        response = await client.post(url_add_user, headers=headers, json=admin_create_data)
-        return response
-
-def make_admin(name: str = admin_create_data['name']):
-    connection = psycopg2.connect(**db_data)
-    cursor = connection.cursor()
-    cursor.execute("UPDATE users SET is_admin = true WHERE name = %s", (name, ))
-    cursor.execute("UPDATE users SET is_super_admin = true WHERE name = %s", (name, ))
-    connection.commit()
-    cursor.close()
-    connection.close()
+async def create_super_admin(user_data: RequestAdminCreation) -> dict:
+    user = await UserDAO.find_one_or_none(external=external, name=user_data.name)
+    if user:
+        if user.role == UserRole.SUPER_ADMIN:
+            return {'message': f'Супер админ на связи.',
+                    'name': user.name}
+        elif user.role == UserRole.ADMIN:
+            check = await UserDAO.update(external=external, filter_by={'id': user.id}, role=UserRole.SUPER_ADMIN)
+            if check:
+                new_admin = await UserDAO.find_one_or_none(external=external, id= user.id)
+                return {'message': f'Супер админ на связи.', 'name': new_admin.name}
+            else:
+                return {"message": "Ошибка при добавлении администратора!"}
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail='Это имя уже занято'
+        )
+    user_dict = user_data.model_dump()
+    user_dict['password_hash'] = get_password_hash(user_dict.pop("password"))
+    await UserDAO.add(external=external, **user_dict)
+    new_admin = await UserDAO.find_one_or_none(external=external, name=user_data.name)
+    return {'message': f'Супер админ на связи.', 'name': new_admin.name}
 
 if __name__ == '__main__':
-    # создадим админа
-    response = asyncio.run(create_admin())
-    # # выдадим админу все права
-    make_admin()
-    print('Суперадмин на связи')
+    response = asyncio.run(create_super_admin(user_data=RequestAdminCreation(
+        name='Admin',
+        password='password',
+        email='admin@localhost.ru',
+        role=UserRole.SUPER_ADMIN,
+    )))
+    print(response)

@@ -2,7 +2,8 @@ from sqlalchemy.future import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import update as sqlalchemy_update, delete as sqlalchemy_delete
 from src.common.database.database import async_session_maker
-from src.common.database.models import User, Food
+from src.common.database.models import User, Food, UserVital
+
 
 class BaseDAO:
     model = None
@@ -73,3 +74,6 @@ class UserDAO(BaseDAO):
 
 class FoodDAO(BaseDAO):
     model = Food
+
+class UserVitalDAO(BaseDAO):
+    model = UserVital

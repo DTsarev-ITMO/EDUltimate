@@ -1,5 +1,9 @@
 from pydantic import BaseModel
 import uuid
 
-class RequestGetID(BaseModel):
+###########################################################
+### Модели для запросов ###
+###########################################################
+
+class RequestIDGet(BaseModel):
     id: uuid.UUID
