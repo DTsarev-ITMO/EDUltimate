@@ -46,16 +46,15 @@ class User(Base):
         nullable=False
     )
 
-    vital: Mapped["UserVital"] = relationship(back_populates="user", uselist=False, lazy="joined")
-    diet: Mapped["Diet"] = relationship(back_populates="user", uselist=False, lazy="joined")
-
+    vital: Mapped[list["UserVital"]] = relationship(back_populates="user", lazy="selectin", cascade="all, delete-orphan")
+    diet: Mapped[list["Diet"]] = relationship(back_populates="user", lazy="selectin", cascade="all, delete-orphan")
     extend_existing = True
 
 class UserVital(Base):
     weight: Mapped[float_def0_an]
-    LBS: Mapped[float_def0_an]
-    fat_percentage: Mapped[float_def0_an]
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    LBS: Mapped[float | None] = mapped_column(default=None)
+    fat_percentage: Mapped[float | None] = mapped_column(default=None)
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
 
     user: Mapped["User"] = relationship(back_populates="vital")
 
@@ -76,8 +75,9 @@ class Food(Base):
 class DietFood(Base):
     __tablename__ = "diet_foods"
 
-    diet_id: Mapped[int] = mapped_column(ForeignKey("diets.id", ondelete="CASCADE"), primary_key=True)
-    food_id: Mapped[int] = mapped_column(ForeignKey("foods.id", ondelete="CASCADE"), primary_key=True)
+    id = None  # Отключаем генерацию UUID-id из базового класса
+    diet_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("diets.id", ondelete="CASCADE"), primary_key=True)
+    food_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("foods.id", ondelete="CASCADE"), primary_key=True)
 
     mass: Mapped[float]
 
@@ -91,7 +91,7 @@ class Diet(Base):
     total_carbs: Mapped[float] = mapped_column(default=0.0)
     total_calories: Mapped[float] = mapped_column(default=0.0)
 
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), unique=True)
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     user: Mapped["User"] = relationship(back_populates="diet")
 
     food_associations: Mapped[list["DietFood"]] = relationship(back_populates="diet", cascade="all, delete-orphan")

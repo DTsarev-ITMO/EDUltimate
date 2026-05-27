@@ -1,27 +1,23 @@
-from fastapi import APIRouter, Depends, Query, HTTPException
+from uuid import UUID
+from fastapi import APIRouter, Depends, Query, HTTPException, status
 from src.common.database.dao import FoodDAO
 from src.common.database.schemas.food_schemas import RequestFoodAdd, ResponseFoodGet
-from src.common.database.schemas.base_schemas import RequestIDGet
 from src.edultimate_api.dependencies import get_current_admin_user
 from src.common.database.models import User
 
 
 router = APIRouter(prefix='/food', tags=['Работа с продуктами'])
-external = False
 
-@router.get("/", summary="Получить все продукты", response_model=list[ResponseFoodGet])
-async def get_all_foods(
-        # external: bool = Query(default=False)
-) -> list[ResponseFoodGet]:
-    return await FoodDAO.find_all(external=external)
+
+@router.get("/", summary="Получить все продукты")
+async def get_all_foods() -> list[ResponseFoodGet]:
+    return await FoodDAO.find_all()
 
 
 @router.get("/by_filter", summary="Получить один продукт по фильтру")
-async def get_food_by_filter(
-        # external: bool = Query(default=False),
-        name: str = Query(..., min_length=1, max_length=50, description="Название продукта"),
-) -> ResponseFoodGet:
-    food = await FoodDAO.find_one_or_none(external=external, name=name)
+async def get_food_by_filter(name: str = Query(..., min_length=1, max_length=50, description="Название продукта")
+                             ) -> ResponseFoodGet:
+    food = await FoodDAO.find_one_or_none(name=name)
     if not food:
         raise HTTPException(status_code=404, detail="Продукт не найден!")
     return food
@@ -30,37 +26,33 @@ async def get_food_by_filter(
 @router.post("/add/")
 async def add_food(
         food: RequestFoodAdd,
-        # external: bool = Query(default=False),
-        current_user: User = Depends(get_current_admin_user)
+        admin: User = Depends(get_current_admin_user)
 ) -> dict:
-    check = await FoodDAO.add(external=external, **food.model_dump())
+    check = await FoodDAO.add(**food.model_dump())
     if check:
         return {"message": "Продукт успешно добавлен!", "продукт": food}
     else:
         return {"message": "Ошибка при добавлении продукта!"}
 
 
-@router.put("/update/")
-async def update(
-        request: RequestIDGet,
-        food: ResponseFoodGet,
-        # external: bool = Query(default=False),
-        current_user: User = Depends(get_current_admin_user)
+@router.put("/update/{food_id}")
+async def update_food(
+        food_id: UUID,
+        food: RequestFoodAdd,
+        admin: User = Depends(get_current_admin_user)
 ) -> dict:
-    check = await FoodDAO.update(external=external, filter_by={'id': request.id},
-                                 **food.model_dump(exclude_none=True))
+    check = await FoodDAO.update(filter_by={'id': food_id}, **food.model_dump(exclude_none=True))
     if check:
         return {"message": "Запись успешно обновлена!", "продукт": food}
     else:
         return {"message": "Ошибка при обновлении записи!"}
 
 
-@router.delete("/delete/{food_name}")
+@router.delete("/delete/{food_id}")
 async def delete_food(
-        request: RequestIDGet,
-        # external: bool = Query(default=False),
-        current_user: User = Depends(get_current_admin_user)) -> dict:
-    check = await FoodDAO.delete(external=external, id=request.id)
+        food_id: UUID,
+        admin: User = Depends(get_current_admin_user)) -> dict:
+    check = await FoodDAO.delete(id=food_id)
     if check:
         return {"message": f"Продукт удален!"}
     else:

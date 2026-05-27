@@ -2,8 +2,9 @@ from sqlalchemy.future import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import update as sqlalchemy_update, delete as sqlalchemy_delete
 from src.common.database.database import async_session_maker
-from src.common.database.models import User, Food, UserVital
-
+from src.common.database.models import User, Food, UserVital, Diet
+from sqlalchemy import and_, or_
+from uuid import UUID
 
 class BaseDAO:
     model = None
@@ -14,12 +15,44 @@ class BaseDAO:
             result = await session.execute(query)
             return result.scalars().all()
 
+
+    @classmethod
+    async def find_by_filter(cls, external: bool=False, **filter_by):
+        async with async_session_maker(external=external) as session:
+            query = select(cls.model).filter_by(**filter_by)
+            result = await session.execute(query)
+            return result.scalars().all()
+
+
+    @classmethod
+    async def find_by_filter_latest(cls, external: bool = False, **filter_by):
+        async with async_session_maker(external=external) as session:
+            query = (
+                select(cls.model)
+                .filter_by(**filter_by)
+                .order_by(cls.model.created_at.desc())
+            )
+            result = await session.execute(query)
+            return result.scalar_one_or_none()
+
+
     @classmethod
     async def find_one_or_none(cls, external: bool=False, **filter_by):
         async with async_session_maker(external=external) as session:
             query = select(cls.model).filter_by(**filter_by)
             result = await session.execute(query)
             return result.scalar_one_or_none()
+
+
+    @classmethod
+    async def find_many_by_ids(cls, ids: list[UUID], external: bool = False):
+        if not ids:
+            return []
+        async with async_session_maker(external=external) as session:
+            query = select(cls.model).where(cls.model.id.in_(ids))
+            result = await session.execute(query)
+            return result.scalars().all()
+
 
     @classmethod
     async def add(cls, external: bool=False, **values):
@@ -33,6 +66,7 @@ class BaseDAO:
                     await session.rollback()
                     raise e
                 return new_instance
+
 
     @classmethod
     async def update(cls, filter_by, external: bool=False, **values):
@@ -51,6 +85,7 @@ class BaseDAO:
                     await session.rollback()
                     raise e
                 return result.rowcount
+
 
     @classmethod
     async def delete(cls, external: bool=False, delete_all: bool = False, **filter_by):
@@ -72,8 +107,13 @@ class BaseDAO:
 class UserDAO(BaseDAO):
     model = User
 
+
 class FoodDAO(BaseDAO):
     model = Food
 
-class UserVitalDAO(BaseDAO):
+
+class VitalDAO(BaseDAO):
     model = UserVital
+
+class DietDAO(BaseDAO):
+    model = Diet
