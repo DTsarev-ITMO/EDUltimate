@@ -1,7 +1,4 @@
-from datetime import datetime
-import uuid
-from pydantic import BaseModel, Field, EmailStr, model_validator
-from src.common.database.models import UserRole
+from pydantic import BaseModel, Field, model_validator
 
 ###########################################################
 ### Модели для запросов ###
@@ -22,7 +19,7 @@ class RequestVitalCreate(BaseModel):
             expected_lbs = self.weight * (1 - self.fat_percentage / 100)
             if abs(self.LBS - expected_lbs) > 0.1:  # Сравниваем с погрешностью
                 raise ValueError('Неверно введены сухая масса или процент жира. Введите что-то одно.')
-
+        return self
 
 ###########################################################
 ### Модели для ответов ###

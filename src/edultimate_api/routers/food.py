@@ -1,7 +1,7 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 from src.common.database.dao import FoodDAO
-from src.common.database.schemas.food_schemas import RequestFoodAdd, ResponseFoodGet
+from src.common.database.schemas.food_schemas import RequestFoodAdd, RequestFoodUpdate, ResponseFoodGet
 from src.edultimate_api.dependencies import get_current_admin_user
 from src.common.database.models import User
 
@@ -38,7 +38,7 @@ async def add_food(
 @router.put("/update/{food_id}")
 async def update_food(
         food_id: UUID,
-        food: RequestFoodAdd,
+        food: RequestFoodUpdate,
         admin: User = Depends(get_current_admin_user)
 ) -> dict:
     check = await FoodDAO.update(filter_by={'id': food_id}, **food.model_dump(exclude_none=True))

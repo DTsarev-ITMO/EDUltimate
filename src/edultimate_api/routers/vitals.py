@@ -21,7 +21,7 @@ async def get_last_vitals(current_user: User = Depends(get_current_user)) -> Res
 
 
 @router.get("/all", summary="Получить все записи")
-async def get_all_vitals(current_user: User = Depends(get_current_user)) -> ResponseVitalGet:
+async def get_all_vitals(current_user: User = Depends(get_current_user)) -> list[ResponseVitalGet]:
     vitals = await VitalDAO.find_by_filter(user_id=current_user.id)
     if not vitals:
         raise HTTPException(
@@ -66,11 +66,19 @@ async def update_vital(
         current_user: User = Depends(get_current_user)
 ) -> dict:
     current_vitals = await VitalDAO.find_one_or_none(id=vital_id)
+
+    if not current_vitals:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Запись не найдена"
+        )
+
     if current_vitals.user_id != current_user.id:
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, 
+            status_code=status.HTTP_403_FORBIDDEN,
             detail='Недостаточно прав! Редактировать можно лишь собственные записи.'
         )
+
     check = await VitalDAO.update(filter_by={'id': vital_id}, **vitals.model_dump(exclude_none=True))
     if check:
         return {"message": "Запись успешно обновлена!", "vitals": vitals}
@@ -81,7 +89,6 @@ async def update_vital(
 @router.delete("/delete/{vital_id}")
 async def delete_vital(
         vital_id: UUID,
-        vitals: RequestVitalCreate,
         current_user: User = Depends(get_current_user)
 ) -> dict:
     current_vitals = await VitalDAO.find_one_or_none(id=vital_id)
@@ -92,6 +99,6 @@ async def delete_vital(
         )
     check = await VitalDAO.delete(id=vital_id)
     if check:
-        return {"message": "Запись успешно обновлена!", "vitals": vitals}
+        return {"message": f"Запись удалена!"}
     else:
-        return {"message": "Ошибка при обновлении записи!"}
+        return {"message": "Ошибка при удалении записи!"}

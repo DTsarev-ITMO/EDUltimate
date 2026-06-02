@@ -87,7 +87,7 @@ async def update(
 
 
 @router.put("/update_password/")
-async def update(
+async def update_pass(
         old_password: RequestCheckPassword,
         new_password: RequestUserUpdatePassword,
         current_user: User = Depends(get_current_user),
@@ -97,7 +97,8 @@ async def update(
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail='Неверный пароль')
     if new_password.password_1 != new_password.password_2:
-        return {"error!": "Пароли не совпадают."}
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail='Пароли не совпадают')
     new_password = get_password_hash(new_password.password_1)
     check = await UserDAO.update(
         filter_by={'id': current_user.id},

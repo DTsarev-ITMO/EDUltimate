@@ -1,6 +1,6 @@
 from datetime import datetime
 import uuid
-from pydantic import BaseModel, Field, EmailStr, model_validator
+from pydantic import BaseModel, Field, EmailStr
 from src.common.database.models import UserRole
 
 ###########################################################
